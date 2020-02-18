@@ -9,8 +9,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import com.google.api.client.http.javanet.NetHttpTransport
+import com.google.api.client.json.jackson2.JacksonFactory
+import com.google.api.services.sheets.v4.Sheets
+import com.google.api.services.sheets.v4.SheetsScopes
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,12 +30,29 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestScopes(Scope(SheetsScopes.SPREADSHEETS))
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         signInView.setOnClickListener {
             startActivityForResult(googleSignInClient.signInIntent, SIGN_IN)
+        }
+        testView.setOnClickListener {
+            val scopes = listOf(SheetsScopes.SPREADSHEETS)
+            val credential = GoogleAccountCredential.usingOAuth2(this, scopes)
+            credential.selectedAccount = GoogleSignIn.getLastSignedInAccount(this)!!.account
+
+            val jsonFactory = JacksonFactory.getDefaultInstance()
+            val httpTransport =  NetHttpTransport.Builder().build()
+            val service = Sheets.Builder(httpTransport, jsonFactory, credential)
+                .setApplicationName(getString(R.string.app_name))
+                .build()
+
+            GlobalScope.launch {
+                val data = service.spreadsheets().values().get("1a9Phi9L0TzDrT1RwKcyaXiioW6ohsr4pCG1ezI7jZHo", "A1:Z").execute()
+                println(data)
+            }
         }
     }
 
@@ -44,6 +69,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             SIGN_IN -> {
                 // The Task returned from this call is always completed, no need to attach
@@ -66,7 +92,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val MY_PERMISSIONS_REQUEST_READ_CONTACTS = 100
         private const val SIGN_IN = 10
     }
 }
