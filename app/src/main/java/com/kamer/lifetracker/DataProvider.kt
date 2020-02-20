@@ -14,6 +14,8 @@ object DataProvider {
 
     var activityRef: WeakReference<Activity>? = null
 
+    private val cachedData = mutableListOf<List<Any>>()
+
     fun getData(): List<List<Any>> =
         activityRef?.get()?.let { activity ->
             val scopes = listOf(SheetsScopes.SPREADSHEETS)
@@ -29,6 +31,10 @@ object DataProvider {
             val data = service.spreadsheets().values()
                 .get("1a9Phi9L0TzDrT1RwKcyaXiioW6ohsr4pCG1ezI7jZHo", "A1:Z").execute()
             println(data)
+            cachedData.clear()
+            cachedData.addAll(data.getValues())
             return data.getValues()
         } ?: emptyList()
+
+    fun getCachedData(): List<List<Any>> = cachedData
 }

@@ -19,7 +19,7 @@ class RecordsViewModel : ViewModel() {
             UiRecord(
                 id = index.toString(),
                 date = LocalDate.parse(columns.first(), DateTimeFormatter.ofPattern("DD/mm/yyyy")),
-                state = "${columns.size - 1} of ${data.first().size - 1}"
+                state = "${columns.filter { it != "" }.size - 1} of ${data.first().size - 1}"
             )
         }
         emit(ViewState(parsed))
