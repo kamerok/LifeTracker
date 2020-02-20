@@ -1,6 +1,7 @@
 package com.kamer.lifetracker.records
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kamer.lifetracker.R
 import kotlinx.android.synthetic.main.fragment_records.*
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -27,6 +29,7 @@ class RecordsFragment : Fragment(R.layout.fragment_records) {
 
         viewModel.getState()
             .onEach { adapter.setData(it.records) }
+            .catch { Log.e("TAG", "onViewCreated: ", it) }
             .launchIn(viewLifecycleOwner.lifecycle.coroutineScope)
     }
 
