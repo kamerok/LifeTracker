@@ -13,7 +13,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
 import com.google.api.services.sheets.v4.SheetsScopes
-import com.kamer.lifetracker.days.RecordsFragment
+import com.kamer.lifetracker.records.RecordsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.ref.WeakReference
 

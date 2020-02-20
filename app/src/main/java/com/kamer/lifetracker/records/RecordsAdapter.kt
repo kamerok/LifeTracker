@@ -1,4 +1,4 @@
-package com.kamer.lifetracker.days
+package com.kamer.lifetracker.records
 
 import android.view.LayoutInflater
 import android.view.View

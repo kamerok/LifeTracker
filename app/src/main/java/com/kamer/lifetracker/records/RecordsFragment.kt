@@ -1,4 +1,4 @@
-package com.kamer.lifetracker.days
+package com.kamer.lifetracker.records
 
 import android.os.Bundle
 import android.view.View
