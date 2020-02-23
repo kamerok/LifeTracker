@@ -1,8 +1,10 @@
 package com.kamer.lifetracker.record
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kamer.lifetracker.DataProvider
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
@@ -44,13 +46,19 @@ class RecordViewModel(private val id: String) : ViewModel() {
             ViewState(
                 currentState.fields.map { recordField ->
                     if (recordField.id == id) {
-                        recordField.copy(
-                            isPositive = when {
-                                recordField.isPositive == true && isPositive -> null
-                                recordField.isPositive == false && !isPositive -> null
-                                else -> isPositive
+                        val newValue = when {
+                            recordField.isPositive == true && isPositive -> null
+                            recordField.isPositive == false && !isPositive -> null
+                            else -> isPositive
+                        }
+                        GlobalScope.launch {
+                            try {
+                                DataProvider.updateData(this@RecordViewModel.id, id, newValue)
+                            } catch (e: Exception) {
+                                Log.e("TAG", "onStateClick: ", e)
                             }
-                        )
+                        }
+                        recordField.copy(isPositive = newValue)
                     } else {
                         recordField
                     }
