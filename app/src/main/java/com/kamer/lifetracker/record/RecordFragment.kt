@@ -25,7 +25,7 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
             }
         }
     )
-    private val adapter by lazy { RecordAdapter() }
+    private val adapter by lazy { RecordAdapter(viewModel::onStateClick) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

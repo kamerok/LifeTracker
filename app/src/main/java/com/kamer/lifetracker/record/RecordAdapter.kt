@@ -12,7 +12,9 @@ import com.kamer.lifetracker.R
 import kotlinx.android.synthetic.main.item_record_field.view.*
 
 
-class RecordAdapter : RecyclerView.Adapter<RecordAdapter.ViewHolder>() {
+class RecordAdapter(
+    private val listener: (String, Boolean) -> Unit
+) : RecyclerView.Adapter<RecordAdapter.ViewHolder>() {
 
     private val differ = AsyncListDiffer(this, object : DiffUtil.ItemCallback<RecordField>() {
         override fun areItemsTheSame(oldItem: RecordField, newItem: RecordField): Boolean =
@@ -23,7 +25,8 @@ class RecordAdapter : RecyclerView.Adapter<RecordAdapter.ViewHolder>() {
     })
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_record_field, parent, false)
+        LayoutInflater.from(parent.context).inflate(R.layout.item_record_field, parent, false),
+        listener
     )
 
     override fun getItemCount(): Int = differ.currentList.size
@@ -35,16 +38,24 @@ class RecordAdapter : RecyclerView.Adapter<RecordAdapter.ViewHolder>() {
         differ.submitList(data)
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(
+        view: View,
+        private val listener: (String, Boolean) -> Unit
+    ) : RecyclerView.ViewHolder(view) {
         private val nameView: TextView = view.nameView
         private val yesView: CheckBox = view.yesView
         private val noView: CheckBox = view.noView
 
         fun bind(model: RecordField) {
+            yesView.setOnClickListener { listener(model.id, true) }
+            noView.setOnClickListener { listener(model.id, false) }
             nameView.text = model.name
             yesView.isChecked = model.isPositive == true
             noView.isChecked = model.isPositive == false
-            itemView.alpha = if (model.isPositive == null) 1f else 0.5f
+            val alpha = if (model.isPositive == null) 1f else 0.5f
+            itemView.yesView.alpha = alpha
+            itemView.noView.alpha = alpha
+            itemView.nameView.alpha = alpha
         }
     }
 
