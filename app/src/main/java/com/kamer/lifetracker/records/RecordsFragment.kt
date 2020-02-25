@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.onEach
 class RecordsFragment : Fragment(R.layout.fragment_records) {
 
     private val viewModel by viewModels<RecordsViewModel>()
-    private val adapter = RecordsAdapter {
+    private val adapter = MonthsAdapter {
         requireActivity().supportFragmentManager.commit {
             replace(
                 R.id.fragmentContainer,
@@ -36,7 +36,7 @@ class RecordsFragment : Fragment(R.layout.fragment_records) {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         viewModel.getState()
-            .onEach { adapter.setData(it.records) }
+            .onEach { adapter.setData(it.months) }
             .catch { Log.e("TAG", "onViewCreated: ", it) }
             .launchIn(viewLifecycleOwner.lifecycle.coroutineScope)
     }
