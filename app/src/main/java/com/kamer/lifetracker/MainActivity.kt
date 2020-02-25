@@ -37,8 +37,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             startActivityForResult(googleSignInClient.signInIntent, SIGN_IN)
         }
 
-        supportFragmentManager.commit {
-            replace(R.id.fragmentContainer, RecordsFragment::class.java, null)
+        if (savedInstanceState == null) {
+            supportFragmentManager.commit {
+                replace(R.id.fragmentContainer, RecordsFragment::class.java, null)
+            }
         }
     }
 
