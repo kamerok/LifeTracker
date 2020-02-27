@@ -23,13 +23,13 @@ class RecordsViewModel : ViewModel() {
     }
 
     fun getState(): Flow<ViewState> = DataProvider.database.getEntries().map { entries ->
-        val dateToUiDate = entries.map { entry ->
+        val dateToUiDate = entries.map { (entry, isFilled) ->
             val date = entry.date
             date to UiDay.RealDay(
                 id = entry.id,
                 text = date.dayOfMonth.toString(),
                 isToday = date == LocalDate.now(),
-                isFilled = false
+                isFilled = isFilled
             )
         }.also { println(it.map { it.first }) }
         val months = dateToUiDate.groupBy { it.first.month }

@@ -10,3 +10,6 @@ DELETE FROM property;
 insert:
 INSERT INTO property(id, name, position)
 VALUES ?;
+
+size:
+SELECT count() FROM property;

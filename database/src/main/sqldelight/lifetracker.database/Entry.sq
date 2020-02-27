@@ -14,4 +14,8 @@ INSERT INTO entry(id, date, position)
 VALUES ?;
 
 entryPreview:
-SELECT id, date FROM entry ORDER BY date;
+SELECT id, date, count(value)
+FROM entry
+LEFT JOIN entryProperty ON entryId = entry.id
+GROUP BY id
+ORDER BY date;

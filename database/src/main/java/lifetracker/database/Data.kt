@@ -8,6 +8,8 @@ import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.withContext
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
@@ -50,7 +52,11 @@ class Data(context: Context) {
         }
     }
 
-    fun getEntries(): Flow<List<EntryPreview>> =
+    fun getEntries(): Flow<List<Pair<EntryPreview, Boolean>>> =
         database.entryQueries.entryPreview().asFlow().mapToList()
+            .flatMapLatest { entries ->
+                val size = database.propertyQueries.size().executeAsOne()
+                flowOf(entries.map { it to (it.count == size) })
+            }
 
 }
