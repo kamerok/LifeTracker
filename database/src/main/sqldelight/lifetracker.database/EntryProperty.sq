@@ -1,0 +1,12 @@
+CREATE TABLE entryProperty(
+    entryId TEXT NOT NULL,
+    propertyId TEXT NOT NULL,
+    value INTEGER
+);
+
+clear:
+DELETE FROM entryProperty;
+
+insert:
+INSERT INTO entryProperty(entryId, propertyId, value)
+VALUES ?;

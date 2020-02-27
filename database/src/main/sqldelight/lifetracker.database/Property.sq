@@ -1,0 +1,12 @@
+CREATE TABLE property(
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    position INTEGER UNIQUE NOT NULL
+);
+
+clear:
+DELETE FROM property;
+
+insert:
+INSERT INTO property(id, name, position)
+VALUES ?;

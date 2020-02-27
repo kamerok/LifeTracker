@@ -1,2 +1,4 @@
-include ':app'
 rootProject.name='LifeTracker'
+
+include ':app'
+include ':database'
