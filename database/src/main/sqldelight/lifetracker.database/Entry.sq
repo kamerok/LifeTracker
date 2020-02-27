@@ -1,6 +1,8 @@
+import org.threeten.bp.LocalDate;
+
 CREATE TABLE entry(
     id TEXT PRIMARY KEY,
-    date TEXT NOT NULL,
+    date TEXT as LocalDate NOT NULL,
     position INTEGER UNIQUE NOT NULL
 );
 
@@ -10,3 +12,6 @@ DELETE FROM entry;
 insert:
 INSERT INTO entry(id, date, position)
 VALUES ?;
+
+entryPreview:
+SELECT id, date FROM entry ORDER BY date;

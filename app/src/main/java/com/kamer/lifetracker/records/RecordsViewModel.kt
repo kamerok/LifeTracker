@@ -1,26 +1,35 @@
 package com.kamer.lifetracker.records
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.kamer.lifetracker.DataProvider
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
-import org.threeten.bp.format.DateTimeFormatter
 
 
 class RecordsViewModel : ViewModel() {
 
-    fun getState(): Flow<ViewState> = flow {
-        val data = DataProvider.getData()
-        val dateToUiDate = data.drop(1).mapIndexed { index, list ->
-            val columns = list.map { it.toString() }
-            val date = LocalDate.parse(columns.first(), DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-            val isFilled = (columns.filter { it != "" }.size - 1) == (data.first().size - 1)
+    init {
+        viewModelScope.launch {
+            try {
+                DataProvider.updateData()
+            } catch (e: Exception) {
+                Log.e("TAG", "omg: ", e)
+            }
+        }
+    }
+
+    fun getState(): Flow<ViewState> = DataProvider.database.getEntries().map { entries ->
+        val dateToUiDate = entries.map { entry ->
+            val date = entry.date
             date to UiDay.RealDay(
-                id = index.toString(),
+                id = entry.id,
                 text = date.dayOfMonth.toString(),
                 isToday = date == LocalDate.now(),
-                isFilled = isFilled
+                isFilled = false
             )
         }.also { println(it.map { it.first }) }
         val months = dateToUiDate.groupBy { it.first.month }
@@ -37,7 +46,7 @@ class RecordsViewModel : ViewModel() {
                     days = days
                 )
             }
-        emit(ViewState(months))
+        ViewState(months)
     }
 
 }

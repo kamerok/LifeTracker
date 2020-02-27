@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun updateUi() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
-        statusView.text = if (account != null) "signed" else "unsigned"
         signInView.isVisible = account == null
     }
 

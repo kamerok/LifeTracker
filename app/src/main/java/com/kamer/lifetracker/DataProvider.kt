@@ -25,11 +25,11 @@ object DataProvider {
     var activityRef: WeakReference<Activity>? = null
 
     private val cachedData = mutableListOf<List<Any>>()
-    private val database by lazy { Data(activityRef!!.get()!!) }
+    val database by lazy { Data(activityRef!!.get()!!) }
 
     private val SHEET_ID = "1a9Phi9L0TzDrT1RwKcyaXiioW6ohsr4pCG1ezI7jZHo"
 
-    suspend fun getData(): List<List<Any>> = withContext(Dispatchers.Default) {
+    suspend fun updateData() = withContext(Dispatchers.Default) {
         activityRef?.get()?.let { activity ->
             val scopes = listOf(SheetsScopes.SPREADSHEETS)
             val credential = GoogleAccountCredential.usingOAuth2(activity, scopes)
@@ -64,7 +64,7 @@ object DataProvider {
                 .mapIndexed { index, entryDate ->
                     Entry.Impl(
                         id = UUID.randomUUID().toString(),
-                        date = entryDate.format(DateTimeFormatter.ISO_LOCAL_DATE),
+                        date = entryDate,
                         position = index.toLong()
                     )
                 }
@@ -75,8 +75,8 @@ object DataProvider {
                         entryId = entries[row.index].id,
                         propertyId = properties[index].id,
                         value = when (value) {
-                            "Y" -> 1
-                            "N" -> 0
+                            "Y" -> true
+                            "N" -> false
                             else -> null
                         }
                     )
@@ -87,8 +87,7 @@ object DataProvider {
                 entries,
                 entryProperties
             )
-            values
-        } ?: emptyList()
+        }
     }
 
     fun getCachedData(): List<List<Any>> = cachedData

@@ -1,7 +1,12 @@
+import java.lang.Boolean;
+
 CREATE TABLE entryProperty(
     entryId TEXT NOT NULL,
     propertyId TEXT NOT NULL,
-    value INTEGER
+    value INTEGER as Boolean,
+
+    FOREIGN KEY(entryId) REFERENCES entry(id),
+    FOREIGN KEY(propertyId) REFERENCES property(id)
 );
 
 clear:
