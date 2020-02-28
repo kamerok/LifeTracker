@@ -6,7 +6,8 @@ CREATE TABLE entryProperty(
     value INTEGER as Boolean,
 
     FOREIGN KEY(entryId) REFERENCES entry(id),
-    FOREIGN KEY(propertyId) REFERENCES property(id)
+    FOREIGN KEY(propertyId) REFERENCES property(id),
+    UNIQUE(entryId, propertyId)
 );
 
 clear:
@@ -15,3 +16,10 @@ DELETE FROM entryProperty;
 insert:
 INSERT INTO entryProperty(entryId, propertyId, value)
 VALUES ?;
+
+entryProperties:
+SELECT property.id, name, value
+FROM entry
+LEFT JOIN property
+LEFT JOIN entryProperty ON property.id = propertyId AND entry.id = entryId
+WHERE entry.id = :entryId;

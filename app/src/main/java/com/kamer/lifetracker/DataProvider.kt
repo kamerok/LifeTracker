@@ -105,9 +105,8 @@ object DataProvider {
                     .setApplicationName(activity.getString(R.string.app_name))
                     .build()
 
-                val rowNumber =
-                    entryId.toInt() + 1 /*first row*/ + 1 /*indexes start from 0 but table not*/
-                val columnNumber = propertyId.toInt() + 1
+                val rowNumber = database.getEntry(entryId).position + 1 /*first row*/ + 1 /*indexes start from zero but table not*/
+                val columnNumber = database.getProperty(propertyId).position + 1
                 val range = ('A'.toInt() + columnNumber).toChar().toString() + rowNumber
                 val valueRange =
                     ValueRange().setValues(

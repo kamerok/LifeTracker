@@ -11,5 +11,10 @@ insert:
 INSERT INTO property(id, name, position)
 VALUES ?;
 
+findById:
+SELECT *
+FROM property
+WHERE id = :id;
+
 size:
 SELECT count() FROM property;

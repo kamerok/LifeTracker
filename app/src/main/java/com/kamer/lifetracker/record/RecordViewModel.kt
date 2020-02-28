@@ -17,23 +17,14 @@ class RecordViewModel(private val id: String) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            val data = DataProvider.getCachedData()
-            val names = data.first().drop(1)
-            val row = data.drop(1)[id.toInt()].drop(1)
-            val fields = names
-                .mapIndexed { index, value ->
-                    val name = value.toString()
-                    RecordField(
-                        id = index.toString(),
-                        name = name,
-                        isPositive = when (row.getOrNull(index)) {
-                            "Y" -> true
-                            "N" -> false
-                            else -> null
-                        }
-                    )
-                }
-                .sortedBy { it.isPositive != null }
+            val data = DataProvider.database.getEntryProperties(id)
+            val fields = data.map { value ->
+                RecordField(
+                    id = value.id ?: "",
+                    name = value.name ?: "",
+                    isPositive = value.value
+                )
+            }.sortedBy { it.isPositive != null }
             channel.send(ViewState(fields))
         }
     }

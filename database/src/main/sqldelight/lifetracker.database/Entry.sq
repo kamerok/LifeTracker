@@ -13,6 +13,11 @@ insert:
 INSERT INTO entry(id, date, position)
 VALUES ?;
 
+findById:
+SELECT *
+FROM entry
+WHERE id = :id;
+
 entryPreview:
 SELECT id, date, count(value)
 FROM entry
