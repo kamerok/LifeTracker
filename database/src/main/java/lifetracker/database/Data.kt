@@ -59,13 +59,19 @@ class Data(context: Context) {
                 flowOf(entries.map { it to (it.count == size) })
             }
 
-    suspend fun getEntryProperties(entryId: String): List<EntryProperties> =
-        withContext(Dispatchers.IO) {
-            database.entryPropertyQueries.entryProperties(entryId).executeAsList()
-        }
+    fun getEntryProperties(entryId: String): Flow<List<EntryProperties>> =
+        database.entryPropertyQueries.entryProperties(entryId).asFlow().mapToList()
 
     suspend fun getEntry(id: String): Entry = withContext(Dispatchers.IO) {
         database.entryQueries.findById(id).executeAsOne()
+    }
+
+    suspend fun getEntryProperty(entryId: String, propertyId: String): EntryProperty = withContext(Dispatchers.IO) {
+        database.entryPropertyQueries.findById(entryId, propertyId).executeAsOne()
+    }
+
+    suspend fun updateEntryPropertyValue(entryId: String, propertyId: String, value: Boolean?) = withContext(Dispatchers.IO) {
+        database.entryPropertyQueries.updateValue(value, entryId, propertyId)
     }
 
     suspend fun getProperty(id: String): Property = withContext(Dispatchers.IO) {

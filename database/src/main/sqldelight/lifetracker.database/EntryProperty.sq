@@ -17,6 +17,16 @@ insert:
 INSERT INTO entryProperty(entryId, propertyId, value)
 VALUES ?;
 
+updateValue:
+UPDATE entryProperty
+SET value = :value
+WHERE entryId = :entryId AND propertyId = :propertyId;
+
+findById:
+SELECT *
+FROM entryProperty
+WHERE entryId = :entryId AND propertyId = :propertyId;
+
 entryProperties:
 SELECT property.id, name, value
 FROM entry
