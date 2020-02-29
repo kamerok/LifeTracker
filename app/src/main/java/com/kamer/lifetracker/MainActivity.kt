@@ -13,6 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
 import com.google.api.services.sheets.v4.SheetsScopes
+import com.kamer.lifetracker.properties.PropertiesFragment
 import com.kamer.lifetracker.records.RecordsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
@@ -40,7 +41,32 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
-                replace(R.id.fragmentContainer, RecordsFragment::class.java, null)
+                add(R.id.fragmentContainer, RecordsFragment::class.java, null, "history")
+            }
+        }
+
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.action_history -> {
+                    supportFragmentManager.commit {
+                        supportFragmentManager.findFragmentByTag("props")?.run { hide(this) }
+                        show(supportFragmentManager.findFragmentByTag("history")!!)
+                    }
+                    true
+                }
+                R.id.action_properties -> {
+                    supportFragmentManager.commit {
+                        supportFragmentManager.findFragmentByTag("history")?.run { hide(this) }
+                        val fragment = supportFragmentManager.findFragmentByTag("props")
+                        if (fragment != null) {
+                            show(fragment)
+                        } else {
+                            add(R.id.fragmentContainer, PropertiesFragment::class.java, null, "props")
+                        }
+                    }
+                    true
+                }
+                else -> false
             }
         }
     }
