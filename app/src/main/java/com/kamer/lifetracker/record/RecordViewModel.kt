@@ -29,13 +29,26 @@ class RecordViewModel(private val id: String) : ViewModel() {
             try {
                 val entryProperty =
                     DataProvider.database.getEntryProperty(this@RecordViewModel.id, id)
+                val oldValue = entryProperty?.value
                 val newValue = when {
-                    entryProperty.value == true && isPositive -> null
-                    entryProperty.value == false && !isPositive -> null
+                    oldValue == true && isPositive -> null
+                    oldValue == false && !isPositive -> null
                     else -> isPositive
                 }
                 DataProvider.updateData(this@RecordViewModel.id, id, newValue)
-                DataProvider.database.updateEntryPropertyValue(this@RecordViewModel.id, id, newValue)
+                if (entryProperty!= null) {
+                    DataProvider.database.updateEntryPropertyValue(
+                        this@RecordViewModel.id,
+                        id,
+                        newValue
+                    )
+                } else {
+                    DataProvider.database.createEntryProperty(
+                        this@RecordViewModel.id,
+                        id,
+                        newValue
+                    )
+                }
             } catch (e: Exception) {
                 Log.e("TAG", "onStateClick: ", e)
             }

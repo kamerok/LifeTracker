@@ -66,12 +66,16 @@ class Data(context: Context) {
         database.entryQueries.findById(id).executeAsOne()
     }
 
-    suspend fun getEntryProperty(entryId: String, propertyId: String): EntryProperty = withContext(Dispatchers.IO) {
-        database.entryPropertyQueries.findById(entryId, propertyId).executeAsOne()
+    suspend fun getEntryProperty(entryId: String, propertyId: String): EntryProperty? = withContext(Dispatchers.IO) {
+        database.entryPropertyQueries.findById(entryId, propertyId).executeAsOneOrNull()
     }
 
     suspend fun updateEntryPropertyValue(entryId: String, propertyId: String, value: Boolean?) = withContext(Dispatchers.IO) {
         database.entryPropertyQueries.updateValue(value, entryId, propertyId)
+    }
+
+    suspend fun createEntryProperty(entryId: String, propertyId: String, value: Boolean?) = withContext(Dispatchers.IO) {
+        database.entryPropertyQueries.insert(EntryProperty.Impl(entryId, propertyId, value))
     }
 
     suspend fun getProperty(id: String): Property = withContext(Dispatchers.IO) {
