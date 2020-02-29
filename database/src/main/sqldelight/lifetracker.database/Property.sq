@@ -17,4 +17,10 @@ FROM property
 WHERE id = :id;
 
 size:
-SELECT count() FROM property;
+SELECT count()
+FROM property;
+
+selectAll:
+SELECT *
+FROM property
+ORDER BY position;

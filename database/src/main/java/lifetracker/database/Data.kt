@@ -66,17 +66,23 @@ class Data(context: Context) {
         database.entryQueries.findById(id).executeAsOne()
     }
 
-    suspend fun getEntryProperty(entryId: String, propertyId: String): EntryProperty? = withContext(Dispatchers.IO) {
-        database.entryPropertyQueries.findById(entryId, propertyId).executeAsOneOrNull()
-    }
+    suspend fun getEntryProperty(entryId: String, propertyId: String): EntryProperty? =
+        withContext(Dispatchers.IO) {
+            database.entryPropertyQueries.findById(entryId, propertyId).executeAsOneOrNull()
+        }
 
-    suspend fun updateEntryPropertyValue(entryId: String, propertyId: String, value: Boolean?) = withContext(Dispatchers.IO) {
-        database.entryPropertyQueries.updateValue(value, entryId, propertyId)
-    }
+    fun getProperties(): Flow<List<Property>> =
+        database.propertyQueries.selectAll().asFlow().mapToList()
 
-    suspend fun createEntryProperty(entryId: String, propertyId: String, value: Boolean?) = withContext(Dispatchers.IO) {
-        database.entryPropertyQueries.insert(EntryProperty.Impl(entryId, propertyId, value))
-    }
+    suspend fun updateEntryPropertyValue(entryId: String, propertyId: String, value: Boolean?) =
+        withContext(Dispatchers.IO) {
+            database.entryPropertyQueries.updateValue(value, entryId, propertyId)
+        }
+
+    suspend fun createEntryProperty(entryId: String, propertyId: String, value: Boolean?) =
+        withContext(Dispatchers.IO) {
+            database.entryPropertyQueries.insert(EntryProperty.Impl(entryId, propertyId, value))
+        }
 
     suspend fun getProperty(id: String): Property = withContext(Dispatchers.IO) {
         database.propertyQueries.findById(id).executeAsOne()
