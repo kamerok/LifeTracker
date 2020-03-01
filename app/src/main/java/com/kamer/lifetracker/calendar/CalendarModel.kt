@@ -1,4 +1,6 @@
-package com.kamer.lifetracker.records
+package com.kamer.lifetracker.calendar
+
+import org.threeten.bp.LocalDate
 
 
 data class UiMonth(
@@ -10,8 +12,7 @@ sealed class UiDay {
     object DummyDay : UiDay()
 
     data class RealDay(
-        val id: String,
-        val text: String,
+        val date: LocalDate,
         val isToday: Boolean,
         val isFilled: Boolean
     ) : UiDay()

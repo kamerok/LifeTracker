@@ -1,4 +1,4 @@
-package com.kamer.lifetracker.records
+package com.kamer.lifetracker.calendar
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +8,11 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.kamer.lifetracker.R
 import kotlinx.android.synthetic.main.item_day.view.*
+import org.threeten.bp.LocalDate
 
 
 class DayAdapter(
-    private val listener: (UiDay.RealDay) -> Unit
+    private val listener: (LocalDate) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var data = listOf<UiDay>()
@@ -57,16 +58,16 @@ class DayAdapter(
 
     class RealHolder(
         view: View,
-        private val listener: (UiDay.RealDay) -> Unit
+        private val listener: (LocalDate) -> Unit
     ) : RecyclerView.ViewHolder(view) {
         private val textView: TextView = view.textView
         private val todayView: View = view.todayView
         private val filledView: View = view.filledView
 
         fun bind(model: UiDay.RealDay) {
-            itemView.setOnClickListener { listener(model) }
+            itemView.setOnClickListener { listener(model.date) }
 
-            textView.text = model.text
+            textView.text = model.date.dayOfMonth.toString()
             todayView.isVisible = model.isToday
             filledView.isVisible = model.isFilled
         }

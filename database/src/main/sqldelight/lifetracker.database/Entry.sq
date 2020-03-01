@@ -18,6 +18,11 @@ SELECT *
 FROM entry
 WHERE id = :id;
 
+findByDate:
+SELECT *
+FROM entry
+WHERE date = :date;
+
 entryPreview:
 SELECT id, date, count(value)
 FROM entry

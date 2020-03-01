@@ -9,8 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
 import com.kamer.lifetracker.R
-import com.kamer.lifetracker.records.MonthsAdapter
-import kotlinx.android.synthetic.main.item_month.*
+import kotlinx.android.synthetic.main.fragment_property.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -23,14 +22,12 @@ class PropertyFragment : Fragment(R.layout.fragment_property) {
                 PropertyViewModel(arguments!!["id"].toString()) as T
         }
     }
-    private val adapter = MonthsAdapter {}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView.adapter = adapter
         viewModel.getState()
-            .onEach { adapter.setData(it.months) }
+            .onEach { calendarView.setData(it.filledDates) }
             .launchIn(viewLifecycleOwner.lifecycle.coroutineScope)
     }
 

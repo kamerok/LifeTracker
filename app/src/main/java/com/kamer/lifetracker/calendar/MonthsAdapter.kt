@@ -1,4 +1,4 @@
-package com.kamer.lifetracker.records
+package com.kamer.lifetracker.calendar
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +10,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kamer.lifetracker.R
 import kotlinx.android.synthetic.main.item_month.view.*
+import org.threeten.bp.LocalDate
 
 
-class MonthsAdapter(private val listener: (UiDay.RealDay) -> Unit) :
+class MonthsAdapter(private val listener: (LocalDate) -> Unit) :
     RecyclerView.Adapter<MonthsAdapter.ViewHolder>() {
 
     private val differ = AsyncListDiffer(this, object : DiffUtil.ItemCallback<UiMonth>() {
@@ -23,10 +24,11 @@ class MonthsAdapter(private val listener: (UiDay.RealDay) -> Unit) :
             oldItem == newItem
     })
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_month, parent, false),
-        listener
-    )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+        ViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_month, parent, false),
+            listener
+        )
 
     override fun getItemCount(): Int = differ.currentList.size
 
@@ -39,7 +41,7 @@ class MonthsAdapter(private val listener: (UiDay.RealDay) -> Unit) :
 
     class ViewHolder(
         view: View,
-        private val listener: (UiDay.RealDay) -> Unit
+        private val listener: (LocalDate) -> Unit
     ) : RecyclerView.ViewHolder(view) {
         private val nameView: TextView = view.nameView
         private val recyclerView: RecyclerView = view.recyclerView

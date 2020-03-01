@@ -52,11 +52,11 @@ class Data(context: Context) {
         }
     }
 
-    fun getEntries(): Flow<List<Pair<EntryPreview, Boolean>>> =
+    fun getEntries(): Flow<Map<EntryPreview, Boolean>> =
         database.entryQueries.entryPreview().asFlow().mapToList()
             .flatMapLatest { entries ->
                 val size = database.propertyQueries.size().executeAsOne()
-                flowOf(entries.map { it to (it.count == size) })
+                flowOf(entries.map { it to (it.count == size) }.toMap())
             }
 
     fun getEntryProperties(entryId: String): Flow<List<EntryProperties>> =
@@ -64,6 +64,10 @@ class Data(context: Context) {
 
     suspend fun getEntry(id: String): Entry = withContext(Dispatchers.IO) {
         database.entryQueries.findById(id).executeAsOne()
+    }
+
+    suspend fun getEntryByDate(date: LocalDate): Entry = withContext(Dispatchers.IO) {
+        database.entryQueries.findByDate(date).executeAsOne()
     }
 
     suspend fun getEntryProperty(entryId: String, propertyId: String): EntryProperty? =

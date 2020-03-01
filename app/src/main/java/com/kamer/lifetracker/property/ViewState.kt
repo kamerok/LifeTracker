@@ -1,8 +1,8 @@
 package com.kamer.lifetracker.property
 
-import com.kamer.lifetracker.records.UiMonth
+import org.threeten.bp.LocalDate
 
 
 data class ViewState(
-    val months: List<UiMonth>
+    val filledDates: Map<LocalDate, Boolean>
 )
