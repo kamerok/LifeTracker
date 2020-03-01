@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <com.kamer.lifetracker.calendar.CalendarView
-        android:id="@+id/calendarView"
+        android:id="@+id/calendar_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -3,11 +3,10 @@ package com.kamer.lifetracker.calendar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.kamer.lifetracker.R
-import kotlinx.android.synthetic.main.item_day.view.*
+import com.kamer.lifetracker.databinding.ItemDayBinding
 import org.threeten.bp.LocalDate
 
 
@@ -60,11 +59,9 @@ class DayAdapter(
         view: View,
         private val listener: (LocalDate) -> Unit
     ) : RecyclerView.ViewHolder(view) {
-        private val textView: TextView = view.textView
-        private val todayView: View = view.todayView
-        private val filledView: View = view.filledView
+        private val binding = ItemDayBinding.bind(view)
 
-        fun bind(model: UiDay.RealDay) {
+        fun bind(model: UiDay.RealDay) = with(binding) {
             itemView.setOnClickListener { listener(model.date) }
 
             textView.text = model.date.dayOfMonth.toString()

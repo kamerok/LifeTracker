@@ -13,19 +13,22 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
 import com.google.api.services.sheets.v4.SheetsScopes
+import com.kamer.lifetracker.databinding.ActivityMainBinding
 import com.kamer.lifetracker.properties.PropertiesFragment
 import com.kamer.lifetracker.records.RecordsFragment
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var googleSignInClient: GoogleSignInClient
 
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(binding.root)
 
         DataProvider.activityRef = WeakReference(this)
 
@@ -35,17 +38,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        signInView.setOnClickListener {
+        binding.signInView.setOnClickListener {
             startActivityForResult(googleSignInClient.signInIntent, SIGN_IN)
         }
 
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
-                add(R.id.fragmentContainer, RecordsFragment::class.java, null, "history")
+                add(R.id.fragment_container, RecordsFragment::class.java, null, "history")
             }
         }
 
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.action_history -> {
                     supportFragmentManager.commit {
@@ -61,7 +64,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         if (fragment != null) {
                             show(fragment)
                         } else {
-                            add(R.id.fragmentContainer, PropertiesFragment::class.java, null, "props")
+                            add(
+                                R.id.fragment_container,
+                                PropertiesFragment::class.java,
+                                null,
+                                "props"
+                            )
                         }
                     }
                     true
@@ -78,7 +86,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun updateUi() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
-        signInView.isVisible = account == null
+        binding.signInView.isVisible = account == null
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

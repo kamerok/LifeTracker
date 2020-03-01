@@ -3,12 +3,11 @@ package com.kamer.lifetracker.properties
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.kamer.lifetracker.R
-import kotlinx.android.synthetic.main.item_property.view.*
+import com.kamer.lifetracker.databinding.ItemPropertyBinding
 
 
 class PropertyAdapter(
@@ -41,9 +40,9 @@ class PropertyAdapter(
         view: View,
         private val listener: (String) -> Unit
     ) : RecyclerView.ViewHolder(view) {
-        private val textView: TextView = view.textView
+        private val binding = ItemPropertyBinding.bind(view)
 
-        fun bind(model: UiProperty) {
+        fun bind(model: UiProperty) = with(binding) {
             itemView.setOnClickListener { listener(model.id) }
             textView.text = model.name
         }

@@ -3,13 +3,11 @@ package com.kamer.lifetracker.calendar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kamer.lifetracker.R
-import kotlinx.android.synthetic.main.item_month.view.*
+import com.kamer.lifetracker.databinding.ItemMonthBinding
 import org.threeten.bp.LocalDate
 
 
@@ -41,19 +39,17 @@ class MonthsAdapter(private val listener: (LocalDate) -> Unit) :
 
     class ViewHolder(
         view: View,
-        private val listener: (LocalDate) -> Unit
+        listener: (LocalDate) -> Unit
     ) : RecyclerView.ViewHolder(view) {
-        private val nameView: TextView = view.nameView
-        private val recyclerView: RecyclerView = view.recyclerView
+        private val binding = ItemMonthBinding.bind(view)
 
         private val adapter = DayAdapter(listener)
 
         init {
-            recyclerView.layoutManager = GridLayoutManager(view.context, 7)
-            recyclerView.adapter = adapter
+            binding.recyclerView.adapter = adapter
         }
 
-        fun bind(model: UiMonth) {
+        fun bind(model: UiMonth) = with(binding) {
             nameView.text = model.name
             adapter.setData(model.days)
         }

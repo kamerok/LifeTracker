@@ -7,8 +7,9 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import com.kamer.lifetracker.R
+import com.kamer.lifetracker.databinding.FragmentPropertiesBinding
 import com.kamer.lifetracker.property.PropertyFragment
-import kotlinx.android.synthetic.main.item_month.*
+import com.kamer.lifetracker.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -17,10 +18,11 @@ class PropertiesFragment : Fragment(R.layout.fragment_properties) {
 
     private val viewModel: PropertiesViewModel by viewModels()
 
+    private val binding by viewBinding(FragmentPropertiesBinding::bind)
     private val adapter = PropertyAdapter { id ->
         requireActivity().supportFragmentManager.commit {
             replace(
-                R.id.fragmentContainer,
+                R.id.fragment_container,
                 PropertyFragment::class.java,
                 PropertyFragment.createArgs(id)
             )
@@ -29,8 +31,7 @@ class PropertiesFragment : Fragment(R.layout.fragment_properties) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        recyclerView.adapter = adapter
+        binding.recyclerView.adapter = adapter
 
         viewModel.getState()
             .onEach { adapter.setData(it.properties) }

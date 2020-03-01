@@ -3,13 +3,11 @@ package com.kamer.lifetracker.record
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.TextView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.kamer.lifetracker.R
-import kotlinx.android.synthetic.main.item_record_field.view.*
+import com.kamer.lifetracker.databinding.ItemRecordFieldBinding
 
 
 class RecordAdapter(
@@ -42,20 +40,18 @@ class RecordAdapter(
         view: View,
         private val listener: (String, Boolean) -> Unit
     ) : RecyclerView.ViewHolder(view) {
-        private val nameView: TextView = view.nameView
-        private val yesView: CheckBox = view.yesView
-        private val noView: CheckBox = view.noView
+        private val binding = ItemRecordFieldBinding.bind(view)
 
-        fun bind(model: RecordField) {
+        fun bind(model: RecordField) = with(binding) {
             yesView.setOnClickListener { listener(model.id, true) }
             noView.setOnClickListener { listener(model.id, false) }
             nameView.text = model.name
             yesView.isChecked = model.isPositive == true
             noView.isChecked = model.isPositive == false
             val alpha = if (model.isPositive == null) 1f else 0.5f
-            itemView.yesView.alpha = alpha
-            itemView.noView.alpha = alpha
-            itemView.nameView.alpha = alpha
+            yesView.alpha = alpha
+            noView.alpha = alpha
+            nameView.alpha = alpha
         }
     }
 

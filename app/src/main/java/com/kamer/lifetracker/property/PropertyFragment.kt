@@ -9,7 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
 import com.kamer.lifetracker.R
-import kotlinx.android.synthetic.main.fragment_property.*
+import com.kamer.lifetracker.databinding.FragmentPropertyBinding
+import com.kamer.lifetracker.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -23,11 +24,13 @@ class PropertyFragment : Fragment(R.layout.fragment_property) {
         }
     }
 
+    private val binding by viewBinding(FragmentPropertyBinding::bind)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getState()
-            .onEach { calendarView.setData(it.filledDates) }
+            .onEach { binding.calendarView.setData(it.filledDates) }
             .launchIn(viewLifecycleOwner.lifecycle.coroutineScope)
     }
 

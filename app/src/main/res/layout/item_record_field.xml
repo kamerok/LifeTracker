@@ -7,7 +7,7 @@
     android:padding="8dp">
 
     <TextView
-        android:id="@+id/nameView"
+        android:id="@+id/name_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,23 +16,23 @@
         tools:text="Field Name" />
 
     <CheckBox
-        android:id="@+id/yesView"
+        android:id="@+id/yes_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Yes"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/noView"
+        app:layout_constraintEnd_toStartOf="@id/no_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nameView" />
+        app:layout_constraintTop_toBottomOf="@id/name_view" />
 
     <CheckBox
-        android:id="@+id/noView"
+        android:id="@+id/no_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="No"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/yesView"
-        app:layout_constraintTop_toBottomOf="@id/nameView" />
+        app:layout_constraintStart_toEndOf="@id/yes_view"
+        app:layout_constraintTop_toBottomOf="@id/name_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

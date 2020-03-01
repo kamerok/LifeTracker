@@ -8,9 +8,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.kamer.lifetracker.R
-import kotlinx.android.synthetic.main.fragment_record.*
+import com.kamer.lifetracker.databinding.FragmentRecordBinding
+import com.kamer.lifetracker.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -25,12 +25,12 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
             }
         }
     )
+
+    private val binding by viewBinding(FragmentRecordBinding::bind)
     private val adapter by lazy { RecordAdapter(viewModel::onStateClick) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = adapter
+        binding.recyclerView.adapter = adapter
 
         viewModel.getState()
             .onEach { adapter.setData(it.fields) }
