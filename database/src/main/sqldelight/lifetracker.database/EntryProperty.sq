@@ -33,3 +33,9 @@ FROM entry
 LEFT JOIN property
 LEFT JOIN entryProperty ON property.id = propertyId AND entry.id = entryId
 WHERE entry.id = :entryId;
+
+propertyEntries:
+SELECT date, value
+FROM entry
+LEFT JOIN entryProperty ON entry.id = entryId
+WHERE propertyId = :propertyId;

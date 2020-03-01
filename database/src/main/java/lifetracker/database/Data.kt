@@ -62,6 +62,9 @@ class Data(context: Context) {
     fun getEntryProperties(entryId: String): Flow<List<EntryProperties>> =
         database.entryPropertyQueries.entryProperties(entryId).asFlow().mapToList()
 
+    fun getPropertyEntries(propertyId: String): Flow<List<PropertyEntries>> =
+        database.entryPropertyQueries.propertyEntries(propertyId).asFlow().mapToList()
+
     suspend fun getEntry(id: String): Entry = withContext(Dispatchers.IO) {
         database.entryQueries.findById(id).executeAsOne()
     }
