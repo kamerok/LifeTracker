@@ -7,11 +7,20 @@
     android:background="?selectableItemBackground">
 
     <View
+        android:id="@+id/filledView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="2dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@id/textView"
+        app:layout_constraintStart_toEndOf="@id/textView" />
+
+    <View
         android:id="@+id/todayView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.5"
-        android:background="@color/colorAccent" />
+        android:background="@drawable/shape_accent_round" />
 
     <TextView
         android:id="@+id/textView"
@@ -23,13 +32,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="1" />
-
-    <View
-        android:id="@+id/filledView"
-        android:layout_width="5dp"
-        android:layout_height="5dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@id/textView"
-        app:layout_constraintStart_toEndOf="@id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
