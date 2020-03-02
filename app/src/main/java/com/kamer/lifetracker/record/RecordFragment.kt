@@ -13,6 +13,7 @@ import com.kamer.lifetracker.databinding.FragmentRecordBinding
 import com.kamer.lifetracker.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.threeten.bp.LocalDate
 
 
 class RecordFragment : Fragment(R.layout.fragment_record) {
@@ -21,7 +22,7 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
         factoryProducer = {
             object : ViewModelProvider.Factory {
                 override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-                    RecordViewModel(arguments!!.getString("id")!!) as T
+                    RecordViewModel(arguments!!.getSerializable("date")!! as LocalDate) as T
             }
         }
     )
@@ -38,8 +39,8 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
     }
 
     companion object {
-        fun createArgs(id: String): Bundle = bundleOf(
-            "id" to id
+        fun createArgs(date: LocalDate): Bundle = bundleOf(
+            "date" to date
         )
     }
 }
