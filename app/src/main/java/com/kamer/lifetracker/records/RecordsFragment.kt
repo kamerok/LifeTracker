@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.onEach
 
 class RecordsFragment : Fragment(R.layout.fragment_records) {
 
-    private val viewModel by viewModels<RecordsViewModel>()
+    private val viewModel: RecordsViewModel by viewModels()
 
     private val binding by viewBinding(FragmentRecordsBinding::bind)
 

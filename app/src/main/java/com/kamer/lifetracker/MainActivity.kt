@@ -2,6 +2,7 @@ package com.kamer.lifetracker
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.commit
@@ -14,6 +15,7 @@ import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
 import com.google.api.services.sheets.v4.SheetsScopes
 import com.kamer.lifetracker.databinding.ActivityMainBinding
+import com.kamer.lifetracker.feed.FeedFragment
 import com.kamer.lifetracker.properties.PropertiesFragment
 import com.kamer.lifetracker.records.RecordsFragment
 import kotlinx.coroutines.launch
@@ -32,6 +34,14 @@ class MainActivity : AppCompatActivity() {
 
         DataProvider.activityRef = WeakReference(this)
 
+        lifecycle.coroutineScope.launch {
+            try {
+                DataProvider.updateData()
+            } catch (e: Exception) {
+                Log.e("TAG", "omg: ", e)
+            }
+        }
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestScopes(Scope(SheetsScopes.SPREADSHEETS))
             .requestEmail()
@@ -44,33 +54,27 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
-                add(R.id.fragment_container, RecordsFragment::class.java, null, "history")
+                replace(R.id.fragment_container, FeedFragment::class.java, null)
             }
         }
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
+                R.id.action_feed -> {
+                    supportFragmentManager.commit {
+                        replace(R.id.fragment_container, FeedFragment::class.java, null)
+                    }
+                    true
+                }
                 R.id.action_history -> {
                     supportFragmentManager.commit {
-                        supportFragmentManager.findFragmentByTag("props")?.run { hide(this) }
-                        show(supportFragmentManager.findFragmentByTag("history")!!)
+                        replace(R.id.fragment_container, RecordsFragment::class.java, null)
                     }
                     true
                 }
                 R.id.action_properties -> {
                     supportFragmentManager.commit {
-                        supportFragmentManager.findFragmentByTag("history")?.run { hide(this) }
-                        val fragment = supportFragmentManager.findFragmentByTag("props")
-                        if (fragment != null) {
-                            show(fragment)
-                        } else {
-                            add(
-                                R.id.fragment_container,
-                                PropertiesFragment::class.java,
-                                null,
-                                "props"
-                            )
-                        }
+                        replace(R.id.fragment_container, PropertiesFragment::class.java, null)
                     }
                     true
                 }
