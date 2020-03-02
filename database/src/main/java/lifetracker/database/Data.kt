@@ -6,10 +6,12 @@ import com.squareup.sqldelight.ColumnAdapter
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
+import com.squareup.sqldelight.runtime.coroutines.mapToOne
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
@@ -57,6 +59,13 @@ class Data(context: Context) {
             .flatMapLatest { entries ->
                 val size = database.propertyQueries.size().executeAsOne()
                 flowOf(entries.map { it to (it.count == size) }.toMap())
+            }
+
+    fun getEntryStatus(date: LocalDate): Flow<Pair<EntryPreviewByDate, Long>> =
+        database.entryQueries.entryPreviewByDate(date).asFlow().mapToOne()
+            .map { entry ->
+                val size = database.propertyQueries.size().executeAsOne()
+                entry to size
             }
 
     fun getEntryProperties(entryId: String): Flow<List<EntryProperties>> =

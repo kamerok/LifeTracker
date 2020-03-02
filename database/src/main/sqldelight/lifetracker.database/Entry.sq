@@ -29,3 +29,10 @@ FROM entry
 LEFT JOIN entryProperty ON entryId = entry.id
 GROUP BY id
 ORDER BY date;
+
+entryPreviewByDate:
+SELECT id, date, count(value)
+FROM entry
+LEFT JOIN entryProperty ON entryId = entry.id
+WHERE date = :date
+GROUP BY id;
