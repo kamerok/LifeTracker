@@ -24,7 +24,6 @@ object DataProvider {
 
     var activityRef: WeakReference<Activity>? = null
 
-    private val cachedData = mutableListOf<List<Any>>()
     val database by lazy { Data(activityRef!!.get()!!) }
 
     private val SHEET_ID = "1a9Phi9L0TzDrT1RwKcyaXiioW6ohsr4pCG1ezI7jZHo"
@@ -43,9 +42,7 @@ object DataProvider {
 
             val data = service.spreadsheets().values().get(SHEET_ID, "A1:Z").execute()
             println(data)
-            cachedData.clear()
             val values = data.getValues()
-            cachedData.addAll(values)
 
             val properties = values.first().drop(1).mapIndexed { index, value ->
                 Property.Impl(
@@ -89,8 +86,6 @@ object DataProvider {
             )
         }
     }
-
-    fun getCachedData(): List<List<Any>> = cachedData
 
     suspend fun updateData(entryId: String, propertyId: String, value: Boolean?) =
         withContext(Dispatchers.Default) {
