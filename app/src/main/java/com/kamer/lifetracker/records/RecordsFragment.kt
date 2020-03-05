@@ -23,7 +23,6 @@ class RecordsFragment : Fragment(R.layout.fragment_records) {
     private val binding by viewBinding(FragmentRecordsBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         binding.calendarView.onDateClickListener { date ->
             requireActivity().supportFragmentManager.commit {
                 replace(
