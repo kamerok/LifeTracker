@@ -3,8 +3,8 @@ package com.kamer.lifetracker.feed
 import androidx.lifecycle.ViewModel
 import com.kamer.lifetracker.DataProvider
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.zip
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 
@@ -38,7 +38,7 @@ class FeedViewModel : ViewModel() {
                     )
                 }
             }
-        return previousProgress.zip(currentProgress) { previous, current ->
+        return previousProgress.combine(currentProgress) { previous, current ->
             ViewState(listOfNotNull(previous, current))
         }
     }
