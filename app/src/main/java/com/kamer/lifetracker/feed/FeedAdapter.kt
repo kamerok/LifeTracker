@@ -78,7 +78,7 @@ class FeedAdapter(private val listener: (LocalDate) -> Unit) :
 
         fun bind(model: TodayProgress.Progress) = with(binding) {
             buttonView.setOnClickListener { listener(model.date) }
-            textView.text = "${model.progress} of ${model.total}"
+            textView.text = "${model.date}: ${model.progress} of ${model.total}"
             progressView.max = model.total
             progressView.progress = model.progress
         }
