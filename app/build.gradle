@@ -2,6 +2,7 @@ apply from: rootProject.file('gradle/apply-credential-properties.gradle')
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion 29
@@ -44,6 +45,8 @@ android {
 }
 
 dependencies {
+    def nav_version = "2.3.0-alpha03"
+
     implementation project(':database')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -56,6 +59,9 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'com.google.api-client:google-api-client-android:1.30.8'
     implementation 'com.google.apis:google-api-services-sheets:v4-rev581-1.25.0'
+    
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     debugImplementation 'com.facebook.flipper:flipper:0.31.2'
     debugImplementation 'com.facebook.soloader:soloader:0.8.2'

@@ -5,8 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.fragment.app.commit
 import androidx.lifecycle.coroutineScope
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -15,9 +16,6 @@ import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
 import com.google.api.services.sheets.v4.SheetsScopes
 import com.kamer.lifetracker.databinding.ActivityMainBinding
-import com.kamer.lifetracker.feed.FeedFragment
-import com.kamer.lifetracker.properties.PropertiesFragment
-import com.kamer.lifetracker.records.RecordsFragment
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 
@@ -51,41 +49,12 @@ class MainActivity : AppCompatActivity() {
         binding.signInView.setOnClickListener {
             startActivityForResult(googleSignInClient.signInIntent, SIGN_IN)
         }
-
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                replace(R.id.fragment_container, FeedFragment::class.java, null)
-            }
-        }
-
-        binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.action_feed -> {
-                    supportFragmentManager.commit {
-                        replace(R.id.fragment_container, FeedFragment::class.java, null)
-                    }
-                    true
-                }
-                R.id.action_history -> {
-                    supportFragmentManager.commit {
-                        replace(R.id.fragment_container, RecordsFragment::class.java, null)
-                    }
-                    true
-                }
-                R.id.action_properties -> {
-                    supportFragmentManager.commit {
-                        replace(R.id.fragment_container, PropertiesFragment::class.java, null)
-                    }
-                    true
-                }
-                else -> false
-            }
-        }
     }
 
     override fun onStart() {
         super.onStart()
         updateUi()
+        binding.bottomNavigationView.setupWithNavController(findNavController(R.id.fragment_container))
     }
 
     private fun updateUi() {

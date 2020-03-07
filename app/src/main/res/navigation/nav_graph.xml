@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    app:startDestination="@id/feed_fragment">
+
+    <fragment
+        android:id="@+id/feed_fragment"
+        android:name="com.kamer.lifetracker.feed.FeedFragment"
+        android:label="FeedFragment" >
+        <action
+            android:id="@+id/record"
+            app:destination="@id/recordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/records_fragment"
+        android:name="com.kamer.lifetracker.records.RecordsFragment"
+        android:label="RecordsFragment" >
+        <action
+            android:id="@+id/record"
+            app:destination="@id/recordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/properties_fragment"
+        android:name="com.kamer.lifetracker.properties.PropertiesFragment"
+        android:label="PropertiesFragment" >
+        <action
+            android:id="@+id/property"
+            app:destination="@id/propertyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/propertyFragment"
+        android:name="com.kamer.lifetracker.property.PropertyFragment"
+        android:label="PropertyFragment" >
+        <action
+            android:id="@+id/record"
+            app:destination="@id/recordFragment" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/recordFragment"
+        android:name="com.kamer.lifetracker.record.RecordFragment"
+        android:label="RecordFragment" >
+        <argument
+            android:name="date"
+            app:argType="org.threeten.bp.LocalDate" />
+    </fragment>
+</navigation>
