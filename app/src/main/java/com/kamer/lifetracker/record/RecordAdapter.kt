@@ -3,7 +3,6 @@ package com.kamer.lifetracker.record
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.kamer.lifetracker.R
@@ -14,13 +13,19 @@ class RecordAdapter(
     private val listener: (String, Boolean) -> Unit
 ) : RecyclerView.Adapter<RecordAdapter.ViewHolder>() {
 
-    private val differ = AsyncListDiffer(this, object : DiffUtil.ItemCallback<RecordField>() {
-        override fun areItemsTheSame(oldItem: RecordField, newItem: RecordField): Boolean =
-            oldItem.id == newItem.id
+    private val differ = AsyncListDifferWithoutMoves(
+        this,
+        object : DiffUtil.ItemCallback<RecordField>() {
+            override fun areItemsTheSame(oldItem: RecordField, newItem: RecordField): Boolean =
+                oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: RecordField, newItem: RecordField): Boolean =
-            oldItem == newItem
-    })
+            override fun areContentsTheSame(
+                oldItem: RecordField,
+                newItem: RecordField
+            ): Boolean =
+                oldItem == newItem
+        }
+    )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.item_record_field, parent, false),
