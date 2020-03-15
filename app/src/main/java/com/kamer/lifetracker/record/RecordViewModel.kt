@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.kamer.lifetracker.DataProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
@@ -15,7 +14,7 @@ import org.threeten.bp.LocalDate
 class RecordViewModel(private val date: LocalDate) : ViewModel() {
 
     fun getState(): Flow<ViewState> =
-        flow { emit(DataProvider.database.getEntryByDate(date)) }
+        DataProvider.database.observeEntryByDate(date)
             .flatMapLatest { entry ->
                 DataProvider.database.getEntryProperties(entry.id)
                     .map { data ->

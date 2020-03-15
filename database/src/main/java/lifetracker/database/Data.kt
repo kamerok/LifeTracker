@@ -57,6 +57,9 @@ class Data(private val database: Database) {
         database.entryQueries.findByDate(date).executeAsOne()
     }
 
+    fun observeEntryByDate(date: LocalDate): Flow<Entry> =
+        database.entryQueries.findByDate(date).asFlow().mapToOne()
+
     suspend fun getEntryProperty(entryId: String, propertyId: String): EntryProperty? =
         withContext(Dispatchers.IO) {
             database.entryPropertyQueries.findById(entryId, propertyId).executeAsOneOrNull()
