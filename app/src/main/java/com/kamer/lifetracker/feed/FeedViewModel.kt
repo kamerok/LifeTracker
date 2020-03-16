@@ -11,7 +11,6 @@ import org.threeten.bp.LocalTime
 
 class FeedViewModel : ViewModel() {
 
-    //TODO: skipped day
     fun getState(): Flow<ViewState> {
         val currentEntryDate = if (LocalTime.now().isBefore(LocalTime.of(6, 0))) {
             LocalDate.now().minusDays(1)
@@ -29,7 +28,7 @@ class FeedViewModel : ViewModel() {
         val currentProgress = DataProvider.database.getEntryStatus(currentEntryDate)
             .map { (entry, total) ->
                 if (entry.count == total) {
-                    TodayProgress.Done
+                    TodayProgress.Done(entry.date)
                 } else {
                     TodayProgress.Progress(
                         entry.date,

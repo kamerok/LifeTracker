@@ -6,7 +6,10 @@ import org.threeten.bp.LocalDate
 sealed class FeedItem
 
 sealed class TodayProgress : FeedItem() {
-    object Done : TodayProgress()
+    data class Done(
+        val date: LocalDate
+    ) : TodayProgress()
+
     data class Progress(
         val date: LocalDate,
         val total: Int,

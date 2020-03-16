@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kamer.lifetracker.R
+import com.kamer.lifetracker.databinding.ItemDayDoneBinding
 import com.kamer.lifetracker.databinding.ItemDayProgressBinding
 import com.kamer.lifetracker.databinding.ItemSkippedDayBinding
 import org.threeten.bp.LocalDate
@@ -42,7 +43,7 @@ class FeedAdapter(private val listener: (LocalDate) -> Unit) :
                     R.layout.item_day_done,
                     parent,
                     false
-                )
+                ), listener
             )
         }
 
@@ -53,6 +54,7 @@ class FeedAdapter(private val listener: (LocalDate) -> Unit) :
         when {
             holder is SkippedDayViewHolder && model is SkippedDay -> holder.bind(model)
             holder is ProgressViewHolder && model is TodayProgress.Progress -> holder.bind(model)
+            holder is DoneViewHolder && model is TodayProgress.Done -> holder.bind(model)
         }
     }
 
@@ -84,6 +86,14 @@ class FeedAdapter(private val listener: (LocalDate) -> Unit) :
         }
     }
 
-    class DoneViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    class DoneViewHolder(view: View, private val listener: (LocalDate) -> Unit) :
+        RecyclerView.ViewHolder(view) {
+        private val binding = ItemDayDoneBinding.bind(view)
+
+        fun bind(model: TodayProgress.Done) = with(binding) {
+            buttonView.setOnClickListener { listener(model.date) }
+        }
+
+    }
 
 }
