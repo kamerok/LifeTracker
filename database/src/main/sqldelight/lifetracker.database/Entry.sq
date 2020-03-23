@@ -9,6 +9,9 @@ CREATE TABLE entry(
 clear:
 DELETE FROM entry;
 
+selectAll:
+SELECT * FROM entry;
+
 insert:
 INSERT INTO entry(id, date, position)
 VALUES ?;

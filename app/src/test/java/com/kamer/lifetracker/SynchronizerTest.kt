@@ -17,6 +17,7 @@ import lifetracker.database.Database
 import lifetracker.database.Entry
 import org.junit.Test
 import org.threeten.bp.LocalDate
+import org.threeten.bp.Month
 import org.threeten.bp.format.DateTimeFormatter
 
 class SynchronizerTest {
@@ -91,6 +92,47 @@ class SynchronizerTest {
         val property1 = properties.find { it.name == "Property1" }
 
         assertThat(property1).isNull()
+    }
+
+    @Test
+    fun `Entries should be empty on start`() = runBlocking {
+        val entries = database.entryQueries.selectAll().executeAsList()
+        assertThat(entries).isEmpty()
+    }
+
+    @Test
+    fun `Entry should be created on first sync`() = runBlocking {
+        whenever(service.getData()).thenReturn(
+            listOf(
+                listOf("", "Property"),
+                listOf("10/02/2019")
+            )
+        )
+
+        synchronizer.sync()
+
+        val entries = database.entryQueries.selectAll().executeAsList()
+        assertThat(entries).hasSize(1)
+        val entry = entries.first()
+        assertThat(entry.date).isEqualTo(LocalDate.of(2019, Month.FEBRUARY, 10))
+        assertThat(entry.position).isEqualTo(0)
+    }
+
+    @Test
+    fun `Entry id should be consistent between sync`() = runBlocking {
+        whenever(service.getData()).thenReturn(
+            listOf(
+                listOf("", "Property"),
+                listOf("10/02/2019")
+            )
+        )
+
+        synchronizer.sync()
+        val firstSyncId = database.entryQueries.selectAll().executeAsList().first().id
+        synchronizer.sync()
+        val secondSyncId = database.entryQueries.selectAll().executeAsList().first().id
+
+        assertThat(firstSyncId).isEqualTo(secondSyncId)
     }
 
     private fun buildInMemoryDatabase(): Database {

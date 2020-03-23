@@ -16,21 +16,15 @@ class UpdateDataUseCase(
 ) {
 
     suspend fun saveData(values: List<List<Any>>) = withContext(Dispatchers.IO) {
-        val properties = newProperties(values.first().drop(1))
-        val entries = values.drop(1)
+        val properties = buildProperties(values.first().drop(1))
+        val entryDates = values.drop(1)
             .map {
                 LocalDate.parse(
                     it.first().toString(),
                     DateTimeFormatter.ofPattern("dd/MM/yyyy")
                 )
             }
-            .mapIndexed { index, entryDate ->
-                Entry.Impl(
-                    id = UUID.randomUUID().toString(),
-                    date = entryDate,
-                    position = index.toLong()
-                )
-            }
+        val entries = buildEntries(entryDates)
         val entryProperties = values.drop(1).withIndex().flatMap { row ->
             val entryValues = row.value.drop(1)
             entryValues.mapIndexed { index, value ->
@@ -52,13 +46,28 @@ class UpdateDataUseCase(
         )
     }
 
-    private suspend fun newProperties(propertyNames: List<Any>): List<Property> {
+    private suspend fun buildProperties(propertyNames: List<Any>): List<Property> {
         val existingProperties = database.getAllProperties()
         return propertyNames.mapIndexed { index, value ->
             val name = value.toString()
             val existingProperty = existingProperties.find { it.name == name }
-            val id = existingProperty?.id ?: UUID.randomUUID().toString()
-            Property.Impl(id, name, index.toLong())
+            Property.Impl(
+                id = existingProperty?.id ?: UUID.randomUUID().toString(),
+                name = name,
+                position = index.toLong()
+            )
+        }
+    }
+
+    private suspend fun buildEntries(entryDates: List<LocalDate>): List<Entry> {
+        val existingEntries = database.getAllEntries()
+        return entryDates.mapIndexed { index, entryDate ->
+            val existingEntry = existingEntries.find { it.date == entryDate }
+            Entry.Impl(
+                id = existingEntry?.id ?: UUID.randomUUID().toString(),
+                date = entryDate,
+                position = index.toLong()
+            )
         }
     }
 

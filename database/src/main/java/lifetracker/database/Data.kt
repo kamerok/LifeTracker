@@ -72,6 +72,10 @@ class Data(private val database: Database) {
         database.propertyQueries.selectAll().executeAsList()
     }
 
+    suspend fun getAllEntries(): List<Entry> = withContext(Dispatchers.IO) {
+        database.entryQueries.selectAll().executeAsList()
+    }
+
     suspend fun updateEntryPropertyValue(entryId: String, propertyId: String, value: Boolean?) =
         withContext(Dispatchers.IO) {
             database.entryPropertyQueries.updateValue(value, entryId, propertyId)
