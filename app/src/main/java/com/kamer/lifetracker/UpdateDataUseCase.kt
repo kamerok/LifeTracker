@@ -2,7 +2,10 @@ package com.kamer.lifetracker
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import lifetracker.database.*
+import lifetracker.database.Data
+import lifetracker.database.Entry
+import lifetracker.database.EntryProperty
+import lifetracker.database.Property
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import java.util.*
@@ -13,13 +16,7 @@ class UpdateDataUseCase(
 ) {
 
     suspend fun saveData(values: List<List<Any>>) = withContext(Dispatchers.IO) {
-        val properties = values.first().drop(1).mapIndexed { index, value ->
-            Property.Impl(
-                id = UUID.randomUUID().toString(),
-                name = value.toString(),
-                position = index.toLong()
-            )
-        }
+        val properties = newProperties(values.first().drop(1))
         val entries = values.drop(1)
             .map {
                 LocalDate.parse(
@@ -53,6 +50,16 @@ class UpdateDataUseCase(
             entries,
             entryProperties
         )
+    }
+
+    private suspend fun newProperties(propertyNames: List<Any>): List<Property> {
+        val existingProperties = database.getAllProperties()
+        return propertyNames.mapIndexed { index, value ->
+            val name = value.toString()
+            val existingProperty = existingProperties.find { it.name == name }
+            val id = existingProperty?.id ?: UUID.randomUUID().toString()
+            Property.Impl(id, name, index.toLong())
+        }
     }
 
 }
