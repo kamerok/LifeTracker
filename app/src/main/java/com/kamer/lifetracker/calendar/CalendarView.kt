@@ -48,7 +48,6 @@ class CalendarView @JvmOverloads constructor(
                         )
                     })
             }
-            .also { println(it.keys) }
             .map { (month, days) ->
                 UiMonth(
                     name = month.name,
