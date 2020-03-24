@@ -6,8 +6,6 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.coroutineScope
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -54,7 +52,6 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         updateUi()
-        binding.bottomNavigationView.setupWithNavController(findNavController(R.id.fragment_container))
     }
 
     private fun updateUi() {
