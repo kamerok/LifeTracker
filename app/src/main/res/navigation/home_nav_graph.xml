@@ -9,7 +9,7 @@
         android:label="FeedFragment" >
         <action
             android:id="@+id/record"
-            app:destination="@id/recordFragment" />
+            app:destination="@id/record_fragment" />
     </fragment>
     <fragment
         android:id="@+id/records_fragment"
@@ -17,7 +17,7 @@
         android:label="RecordsFragment" >
         <action
             android:id="@+id/record"
-            app:destination="@id/recordFragment" />
+            app:destination="@id/record_fragment" />
     </fragment>
     <fragment
         android:id="@+id/properties_fragment"
@@ -25,21 +25,21 @@
         android:label="PropertiesFragment" >
         <action
             android:id="@+id/property"
-            app:destination="@id/propertyFragment" />
+            app:destination="@id/property_fragment" />
     </fragment>
     <fragment
-        android:id="@+id/propertyFragment"
+        android:id="@+id/property_fragment"
         android:name="com.kamer.lifetracker.property.PropertyFragment"
         android:label="PropertyFragment" >
         <action
             android:id="@+id/record"
-            app:destination="@id/recordFragment" />
+            app:destination="@id/record_fragment" />
         <argument
             android:name="id"
             app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/recordFragment"
+        android:id="@+id/record_fragment"
         android:name="com.kamer.lifetracker.record.RecordFragment"
         android:label="RecordFragment" >
         <argument
