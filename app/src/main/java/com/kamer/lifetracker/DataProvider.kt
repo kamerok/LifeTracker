@@ -24,4 +24,9 @@ object DataProvider {
         val cellValue = (value?.let { if (it) "Y" else "N" }) ?: ""
         service.setCell(rowNumber, columnNumber, cellValue)
     }
+
+    suspend fun getSheets(): List<Spreadsheet> = listOf(
+        Spreadsheet("1a9Phi9L0TzDrT1RwKcyaXiioW6ohsr4pCG1ezI7jZHo", "Test"),
+        Spreadsheet("1zaVn2FPlWGwfPg3Fn7MqctkUoH3QAEg212GUcdGoELE", "Real")
+    )
 }

@@ -8,7 +8,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.kamer.lifetracker.NaveGraphDirections
 import com.kamer.lifetracker.R
 import com.kamer.lifetracker.databinding.FragmentHomeBinding
 import com.kamer.lifetracker.viewBinding
@@ -37,7 +36,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         if (GoogleSignIn.getLastSignedInAccount(requireContext()) == null) {
-            findNavController().navigate(NaveGraphDirections.login())
+            findNavController().navigate(R.id.login)
         }
     }
 
