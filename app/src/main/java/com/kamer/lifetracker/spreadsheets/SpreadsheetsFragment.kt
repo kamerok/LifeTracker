@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.coroutineScope
+import androidx.navigation.fragment.findNavController
 import com.kamer.lifetracker.DataProvider
 import com.kamer.lifetracker.R
 import com.kamer.lifetracker.databinding.FragmentSpreadsheetsBinding
@@ -14,7 +15,8 @@ class SpreadsheetsFragment : Fragment(R.layout.fragment_spreadsheets) {
 
     private val adapter by lazy {
         SpreadsheetAdapter {
-
+            DataProvider.prefs.sheetId = it
+            findNavController().popBackStack()
         }
     }
 

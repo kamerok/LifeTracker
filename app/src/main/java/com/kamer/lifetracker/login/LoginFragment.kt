@@ -2,6 +2,7 @@ package com.kamer.lifetracker.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.coroutineScope
@@ -13,7 +14,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
 import com.google.api.services.sheets.v4.SheetsScopes
-import com.kamer.lifetracker.DataProvider
 import com.kamer.lifetracker.R
 import com.kamer.lifetracker.databinding.FragmentLoginBinding
 import com.kamer.lifetracker.viewBinding
@@ -59,11 +59,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         lifecycle.coroutineScope.launch {
             try {
-                DataProvider.updateData()
                 findNavController().popBackStack()
                 // Signed in successfully, show authenticated UI.
-            } catch (e: Exception) { // The ApiException status code indicates the detailed failure reason.
-// Please refer to the GoogleSignInStatusCodes class reference for more information.
+            } catch (e: Exception) {
+                Log.e("TAG", "handleSignInResult: ", e)
             }
         }
     }

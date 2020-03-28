@@ -3,8 +3,10 @@ package lifetracker.database
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOne
+import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -37,7 +39,8 @@ class Data(private val database: Database) {
             }
 
     fun getEntryStatus(date: LocalDate): Flow<Pair<EntryPreviewByDate, Long>> =
-        database.entryQueries.entryPreviewByDate(date).asFlow().mapToOne()
+        database.entryQueries.entryPreviewByDate(date).asFlow().mapToOneOrNull()
+            .filterNotNull()
             .map { entry ->
                 val size = database.propertyQueries.size().executeAsOne()
                 entry to size

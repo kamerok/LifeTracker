@@ -12,7 +12,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
-class Service(private val context: Context) {
+class Service(
+    private val context: Context,
+    private val prefs: Prefs
+) {
 
     suspend fun getData(): List<List<Any>> = withContext(Dispatchers.IO) {
         val scopes = listOf(SheetsScopes.SPREADSHEETS)
@@ -25,7 +28,7 @@ class Service(private val context: Context) {
             .setApplicationName(context.getString(R.string.app_name))
             .build()
 
-        val data = service.spreadsheets().values().get(SHEET_ID, "A1:Z").execute()
+        val data = service.spreadsheets().values().get(prefs.sheetId, "A1:Z").execute()
         println(data)
         data.getValues()
     }
@@ -44,12 +47,8 @@ class Service(private val context: Context) {
         val range = ('A'.toInt() + column).toChar().toString() + row
         val valueRange = ValueRange().setValues(listOf(listOf(value)))
         println("$range $value")
-        service.spreadsheets().values().update(SHEET_ID, range, valueRange)
+        service.spreadsheets().values().update(prefs.sheetId, range, valueRange)
             .apply { valueInputOption = "RAW" }.execute()
-    }
-
-    companion object {
-        private val SHEET_ID = "1a9Phi9L0TzDrT1RwKcyaXiioW6ohsr4pCG1ezI7jZHo"
     }
 
 }

@@ -1,6 +1,7 @@
 package com.kamer.lifetracker
 
 import android.app.Activity
+import android.content.Context
 import lifetracker.database.Data
 import lifetracker.database.DatabaseFactory
 import java.lang.ref.WeakReference
@@ -11,8 +12,13 @@ object DataProvider {
     var activityRef: WeakReference<Activity>? = null
 
     val database by lazy { Data(DatabaseFactory.buildDatabase(activityRef!!.get()!!)) }
+    val prefs by lazy {
+        Prefs(
+            activityRef!!.get()!!.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        )
+    }
 
-    private val service by lazy { Service(activityRef!!.get()!!.applicationContext) }
+    private val service by lazy { Service(activityRef!!.get()!!.applicationContext, prefs) }
     private val synchronizer by lazy { Synchronizer(UpdateDataUseCase(database), service) }
 
     suspend fun updateData() = synchronizer.sync()
