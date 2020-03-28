@@ -23,6 +23,7 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        requireActivity().setTitle(R.string.app_name)
         binding.recyclerView.adapter = adapter
 
         viewModel.getState()

@@ -22,6 +22,7 @@ class RecordsFragment : Fragment(R.layout.fragment_records) {
     private val binding by viewBinding(FragmentRecordsBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        requireActivity().setTitle(R.string.app_name)
         binding.calendarView.onDateClickListener { date ->
             findNavController().navigate(RecordsFragmentDirections.record(date))
         }

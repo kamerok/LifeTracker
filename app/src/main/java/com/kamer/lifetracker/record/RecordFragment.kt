@@ -31,6 +31,7 @@ class RecordFragment : Fragment(R.layout.fragment_record) {
     private val adapter by lazy { RecordAdapter(viewModel::onStateClick) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        requireActivity().title = args.date.toString()
         binding.recyclerView.adapter = adapter
 
         viewModel.getState()
