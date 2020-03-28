@@ -24,6 +24,7 @@ class PropertiesFragment : Fragment(R.layout.fragment_properties) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.recyclerView.adapter = adapter
+        requireActivity().setTitle(R.string.app_name)
 
         viewModel.getState()
             .onEach { adapter.setData(it.properties) }

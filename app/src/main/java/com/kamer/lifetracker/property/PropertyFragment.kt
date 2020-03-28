@@ -34,7 +34,10 @@ class PropertyFragment : Fragment(R.layout.fragment_property) {
         }
 
         viewModel.getState()
-            .onEach { binding.calendarView.setData(it.filledDates) }
+            .onEach {
+                requireActivity().title = it.name
+                binding.calendarView.setData(it.filledDates)
+            }
             .launchIn(viewLifecycleOwner.lifecycle.coroutineScope)
     }
 
