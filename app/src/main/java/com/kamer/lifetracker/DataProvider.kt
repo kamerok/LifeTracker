@@ -31,8 +31,5 @@ object DataProvider {
         service.setCell(rowNumber, columnNumber, cellValue)
     }
 
-    suspend fun getSheets(): List<Spreadsheet> = listOf(
-        Spreadsheet("1a9Phi9L0TzDrT1RwKcyaXiioW6ohsr4pCG1ezI7jZHo", "Test"),
-        Spreadsheet("1zaVn2FPlWGwfPg3Fn7MqctkUoH3QAEg212GUcdGoELE", "Real")
-    )
+    suspend fun getSheets(): List<Spreadsheet> = service.getSpreadsheets()
 }

@@ -13,7 +13,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
 import com.google.api.services.sheets.v4.SheetsScopes
+import com.kamer.lifetracker.DataProvider
 import com.kamer.lifetracker.R
 import com.kamer.lifetracker.databinding.FragmentLoginBinding
 import com.kamer.lifetracker.viewBinding
@@ -59,8 +61,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         lifecycle.coroutineScope.launch {
             try {
+                //this is required to ask additional permission in catch block
+                //should when request happens
+                DataProvider.getSheets()
                 findNavController().popBackStack()
                 // Signed in successfully, show authenticated UI.
+            } catch (e: UserRecoverableAuthIOException) {
+                startActivityForResult(e.intent, 10)
             } catch (e: Exception) {
                 Log.e("TAG", "handleSignInResult: ", e)
             }
