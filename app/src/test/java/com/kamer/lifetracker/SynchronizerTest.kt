@@ -8,17 +8,15 @@ import assertk.assertions.isNull
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.squareup.sqldelight.ColumnAdapter
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver.Companion.IN_MEMORY
 import kotlinx.coroutines.runBlocking
 import lifetracker.database.Data
 import lifetracker.database.Database
-import lifetracker.database.Entry
+import lifetracker.database.DatabaseFactory
 import org.junit.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
-import org.threeten.bp.format.DateTimeFormatter
 
 class SynchronizerTest {
 
@@ -138,15 +136,6 @@ class SynchronizerTest {
     private fun buildInMemoryDatabase(): Database {
         val driver = JdbcSqliteDriver(IN_MEMORY)
         Database.Schema.create(driver)
-        return Database(
-            driver,
-            Entry.Adapter(object : ColumnAdapter<LocalDate, String> {
-                override fun decode(databaseValue: String): LocalDate =
-                    LocalDate.parse(databaseValue, DateTimeFormatter.ISO_LOCAL_DATE)
-
-                override fun encode(value: LocalDate): String =
-                    value.format(DateTimeFormatter.ISO_LOCAL_DATE)
-            })
-        )
+        return DatabaseFactory.buildDatabase(driver)
     }
 }

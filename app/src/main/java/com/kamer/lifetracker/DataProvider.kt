@@ -2,7 +2,10 @@ package com.kamer.lifetracker
 
 import android.app.Activity
 import android.content.Context
+import androidx.sqlite.db.SupportSQLiteDatabase
+import com.squareup.sqldelight.android.AndroidSqliteDriver
 import lifetracker.database.Data
+import lifetracker.database.Database
 import lifetracker.database.DatabaseFactory
 import java.lang.ref.WeakReference
 
@@ -11,7 +14,22 @@ object DataProvider {
 
     var activityRef: WeakReference<Activity>? = null
 
-    val database by lazy { Data(DatabaseFactory.buildDatabase(activityRef!!.get()!!)) }
+    val database by lazy {
+        Data(
+            DatabaseFactory.buildDatabase(
+                AndroidSqliteDriver(
+                    schema = Database.Schema,
+                    context = activityRef!!.get()!!,
+                    name = "database.db",
+                    callback = object : AndroidSqliteDriver.Callback(Database.Schema) {
+                        override fun onOpen(db: SupportSQLiteDatabase) {
+                            db.execSQL("PRAGMA foreign_keys=ON;")
+                        }
+                    }
+                )
+            )
+        )
+    }
     val prefs by lazy {
         Prefs(
             activityRef!!.get()!!.getSharedPreferences("prefs", Context.MODE_PRIVATE)
