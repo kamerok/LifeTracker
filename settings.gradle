@@ -2,3 +2,5 @@ rootProject.name='LifeTracker'
 
 include ':app'
 include ':database'
+
+include ':library:calendar'

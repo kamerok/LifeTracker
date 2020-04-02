@@ -1,4 +1,4 @@
-package com.kamer.lifetracker.calendar
+package lifetracker.library.calendar
 
 import org.threeten.bp.LocalDate
 

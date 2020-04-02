@@ -1,4 +1,4 @@
-package com.kamer.lifetracker.calendar
+package lifetracker.library.calendar
 
 import android.content.Context
 import android.util.AttributeSet
@@ -37,7 +37,7 @@ class CalendarView @JvmOverloads constructor(
             start = start.plusDays(1)
         }
         val months = totalDates.groupBy { it.month }
-            .mapValues { (month, days) ->
+            .mapValues { (_, days) ->
                 val startDate = days.first()
                 (1 until startDate.dayOfWeek.value).map { UiDay.DummyDay }
                     .plus(days.map {

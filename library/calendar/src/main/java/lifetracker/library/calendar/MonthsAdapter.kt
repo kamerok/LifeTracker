@@ -1,4 +1,4 @@
-package com.kamer.lifetracker.calendar
+package lifetracker.library.calendar
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.kamer.lifetracker.R
-import com.kamer.lifetracker.databinding.ItemMonthBinding
+import lifetracker.library.calendar.databinding.ItemMonthBinding
 import org.threeten.bp.LocalDate
 
 
