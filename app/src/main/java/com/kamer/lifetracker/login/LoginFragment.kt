@@ -62,7 +62,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         lifecycle.coroutineScope.launch {
             try {
                 //this is required to ask additional permission in catch block
-                //should when request happens
+                //should be when request happens
                 DataProvider.getSheets()
                 findNavController().popBackStack()
                 // Signed in successfully, show authenticated UI.

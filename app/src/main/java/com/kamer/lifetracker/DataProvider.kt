@@ -40,7 +40,7 @@ object DataProvider {
 
     private val jsonFactory = JacksonFactory.getDefaultInstance()
     private val httpTransport = NetHttpTransport.Builder().build()
-    private val driveService by lazy { DriveService(activityRef!!.get()!!.applicationContext, httpTransport, jsonFactory) }
+    val driveService by lazy { DriveService(activityRef!!.get()!!.applicationContext, httpTransport, jsonFactory) }
     private val spreadSheetService by lazy { SpreadsheetService(activityRef!!.get()!!.applicationContext, prefs, httpTransport, jsonFactory) }
     private val synchronizer by lazy { Synchronizer(UpdateDataUseCase(database), spreadSheetService) }
 
