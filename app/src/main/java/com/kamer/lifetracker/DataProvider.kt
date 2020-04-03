@@ -3,6 +3,8 @@ package com.kamer.lifetracker
 import android.app.Activity
 import android.content.Context
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.google.api.client.http.javanet.NetHttpTransport
+import com.google.api.client.json.jackson2.JacksonFactory
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import lifetracker.database.Data
 import lifetracker.database.Database
@@ -36,8 +38,11 @@ object DataProvider {
         )
     }
 
-    private val service by lazy { Service(activityRef!!.get()!!.applicationContext, prefs) }
-    private val synchronizer by lazy { Synchronizer(UpdateDataUseCase(database), service) }
+    private val jsonFactory = JacksonFactory.getDefaultInstance()
+    private val httpTransport = NetHttpTransport.Builder().build()
+    private val driveService by lazy { DriveService(activityRef!!.get()!!.applicationContext, httpTransport, jsonFactory) }
+    private val spreadSheetService by lazy { SpreadsheetService(activityRef!!.get()!!.applicationContext, prefs, httpTransport, jsonFactory) }
+    private val synchronizer by lazy { Synchronizer(UpdateDataUseCase(database), spreadSheetService) }
 
     suspend fun updateData() = synchronizer.sync()
 
@@ -46,8 +51,8 @@ object DataProvider {
             database.getEntry(entryId).position + 1 /*first row*/ + 1 /*indexes start from zero but table not*/
         val columnNumber = database.getProperty(propertyId).position + 1
         val cellValue = (value?.let { if (it) "Y" else "N" }) ?: ""
-        service.setCell(rowNumber, columnNumber, cellValue)
+        spreadSheetService.setCell(rowNumber, columnNumber, cellValue)
     }
 
-    suspend fun getSheets(): List<Spreadsheet> = service.getSpreadsheets()
+    suspend fun getSheets(): List<Spreadsheet> = driveService.getSpreadsheets()
 }

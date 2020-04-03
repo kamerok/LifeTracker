@@ -20,7 +20,7 @@ import org.threeten.bp.Month
 
 class SynchronizerTest {
 
-    private val service: Service = mock {
+    private val service: SpreadsheetService = mock {
         onBlocking { getData() }.doReturn(listOf(listOf()))
     }
     private val database = buildInMemoryDatabase()

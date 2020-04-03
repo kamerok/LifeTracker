@@ -3,10 +3,8 @@ package com.kamer.lifetracker
 import android.content.Context
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-import com.google.api.client.http.javanet.NetHttpTransport
-import com.google.api.client.json.jackson2.JacksonFactory
-import com.google.api.services.drive.Drive
-import com.google.api.services.drive.DriveScopes
+import com.google.api.client.http.HttpTransport
+import com.google.api.client.json.JsonFactory
 import com.google.api.services.sheets.v4.Sheets
 import com.google.api.services.sheets.v4.SheetsScopes
 import com.google.api.services.sheets.v4.model.ValueRange
@@ -14,14 +12,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
-class Service(
+class SpreadsheetService(
     private val context: Context,
-    private val prefs: Prefs
+    private val prefs: Prefs,
+    private val httpTransport: HttpTransport,
+    private val jsonFactory: JsonFactory
 ) {
 
-    private val scopes = listOf(SheetsScopes.SPREADSHEETS, DriveScopes.DRIVE)
-    private val jsonFactory = JacksonFactory.getDefaultInstance()
-    private val httpTransport = NetHttpTransport.Builder().build()
+    private val scopes = listOf(SheetsScopes.SPREADSHEETS)
 
     suspend fun getData(): List<List<Any>> = withContext(Dispatchers.IO) {
         val credential = GoogleAccountCredential.usingOAuth2(context, scopes)
@@ -49,27 +47,6 @@ class Service(
         println("$range $value")
         service.spreadsheets().values().update(prefs.sheetId, range, valueRange)
             .apply { valueInputOption = "RAW" }.execute()
-    }
-
-    suspend fun getSpreadsheets(): List<Spreadsheet> = withContext(Dispatchers.IO) {
-        val credential = GoogleAccountCredential.usingOAuth2(context, scopes)
-        credential.selectedAccount = GoogleSignIn.getLastSignedInAccount(context)!!.account
-
-        val service = Drive.Builder(httpTransport, jsonFactory, credential)
-            .setApplicationName(context.getString(R.string.app_name))
-            .build()
-
-        service.files().list().setQ("mimeType='application/vnd.google-apps.spreadsheet'")
-            .execute()
-            .let { fileList ->
-                fileList.files.map {
-                    Spreadsheet(
-                        it.id,
-                        it.name
-                    )
-                }
-            }
-            .also { println(it) }
     }
 
 }
