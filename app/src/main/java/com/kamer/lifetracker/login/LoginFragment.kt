@@ -10,7 +10,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
-import com.google.api.services.sheets.v4.SheetsScopes
 import com.kamer.lifetracker.R
 import com.kamer.lifetracker.databinding.FragmentLoginBinding
 import com.kamer.lifetracker.viewBinding
@@ -29,7 +28,10 @@ class LoginFragment(
 
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestScopes(Scope(SheetsScopes.SPREADSHEETS))
+            .requestScopes(
+                Scope("https://www.googleapis.com/auth/spreadsheets"),
+                Scope("https://www.googleapis.com/auth/drive")
+            )
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
