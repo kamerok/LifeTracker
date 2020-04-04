@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentFactory
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.kamer.lifetracker.login.LoginFragment
 import com.kamer.lifetracker.spreadsheets.SpreadsheetsFragment
 
 
@@ -25,6 +26,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             override fun instantiate(classLoader: ClassLoader, className: String): Fragment =
                 when (className) {
                     SpreadsheetsFragment::class.qualifiedName -> SpreadsheetsFragment(DataProvider.driveService)
+                    LoginFragment::class.qualifiedName -> LoginFragment {
+                        findNavController(R.id.fragment_container).navigate(
+                            R.id.action_login_fragment_to_spreadsheets_fragment
+                        )
+                    }
                     else -> super.instantiate(classLoader, className)
                 }
         }

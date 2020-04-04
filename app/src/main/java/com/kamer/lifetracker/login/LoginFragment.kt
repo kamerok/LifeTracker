@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -17,7 +16,9 @@ import com.kamer.lifetracker.databinding.FragmentLoginBinding
 import com.kamer.lifetracker.viewBinding
 
 
-class LoginFragment : Fragment(R.layout.fragment_login) {
+class LoginFragment(
+    private val onLoginSuccess: () -> Unit
+) : Fragment(R.layout.fragment_login) {
 
     private lateinit var googleSignInClient: GoogleSignInClient
 
@@ -46,9 +47,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             SIGN_IN -> {
                 val task: Task<GoogleSignInAccount> =
                     GoogleSignIn.getSignedInAccountFromIntent(data)
-                if (task.isSuccessful) {
-                    findNavController().navigate(R.id.action_login_fragment_to_spreadsheets_fragment)
-                }
+                if (task.isSuccessful) onLoginSuccess()
             }
         }
     }
