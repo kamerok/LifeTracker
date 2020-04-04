@@ -1,6 +1,5 @@
 package com.kamer.lifetracker
 
-import android.app.Activity
 import android.content.Context
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.google.api.client.http.javanet.NetHttpTransport
@@ -14,14 +13,14 @@ import java.lang.ref.WeakReference
 
 object DataProvider {
 
-    var activityRef: WeakReference<Activity>? = null
+    var context: WeakReference<Context>? = null
 
     val database by lazy {
         Data(
             DatabaseFactory.buildDatabase(
                 AndroidSqliteDriver(
                     schema = Database.Schema,
-                    context = activityRef!!.get()!!,
+                    context = context!!.get()!!,
                     name = "database.db",
                     callback = object : AndroidSqliteDriver.Callback(Database.Schema) {
                         override fun onOpen(db: SupportSQLiteDatabase) {
@@ -34,15 +33,32 @@ object DataProvider {
     }
     val prefs by lazy {
         Prefs(
-            activityRef!!.get()!!.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+            context!!.get()!!.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         )
     }
 
     private val jsonFactory = JacksonFactory.getDefaultInstance()
     private val httpTransport = NetHttpTransport.Builder().build()
-    val driveService by lazy { DriveService(activityRef!!.get()!!.applicationContext, httpTransport, jsonFactory) }
-    private val spreadSheetService by lazy { SpreadsheetService(activityRef!!.get()!!.applicationContext, prefs, httpTransport, jsonFactory) }
-    private val synchronizer by lazy { Synchronizer(UpdateDataUseCase(database), spreadSheetService) }
+    val activityResultDelegate = ActivityResultDelegate()
+    val driveService by lazy {
+        DriveService(context!!.get()!!.applicationContext, httpTransport, jsonFactory) {
+            activityResultDelegate.launchIntentAsync(it).await()
+        }
+    }
+    private val spreadSheetService by lazy {
+        SpreadsheetService(
+            context!!.get()!!.applicationContext,
+            prefs,
+            httpTransport,
+            jsonFactory
+        ) {
+            activityResultDelegate.launchIntentAsync(it).await()
+        }
+    }
+
+    private val synchronizer by lazy {
+        Synchronizer(UpdateDataUseCase(database), spreadSheetService)
+    }
 
     suspend fun updateData() = synchronizer.sync()
 
@@ -53,6 +69,4 @@ object DataProvider {
         val cellValue = (value?.let { if (it) "Y" else "N" }) ?: ""
         spreadSheetService.setCell(rowNumber, columnNumber, cellValue)
     }
-
-    suspend fun getSheets(): List<Spreadsheet> = driveService.getSpreadsheets()
 }

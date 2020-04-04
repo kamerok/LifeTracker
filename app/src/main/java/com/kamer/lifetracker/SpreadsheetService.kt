@@ -1,6 +1,7 @@
 package com.kamer.lifetracker
 
 import android.content.Context
+import android.content.Intent
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.http.HttpTransport
@@ -16,7 +17,8 @@ class SpreadsheetService(
     private val context: Context,
     private val prefs: Prefs,
     private val httpTransport: HttpTransport,
-    private val jsonFactory: JsonFactory
+    private val jsonFactory: JsonFactory,
+    private val recoverFromError: suspend (Intent) -> Unit
 ) {
 
     private val scopes = listOf(SheetsScopes.SPREADSHEETS)
@@ -29,7 +31,9 @@ class SpreadsheetService(
             .setApplicationName(context.getString(R.string.app_name))
             .build()
 
-        val data = service.spreadsheets().values().get(prefs.sheetId, "A1:Z").execute()
+        val data = checkForRecover(recoverFromError) {
+            service.spreadsheets().values().get(prefs.sheetId, "A1:Z").execute()
+        }
         println(data)
         data.getValues()
     }
@@ -45,8 +49,10 @@ class SpreadsheetService(
         val range = ('A'.toInt() + column).toChar().toString() + row
         val valueRange = ValueRange().setValues(listOf(listOf(value)))
         println("$range $value")
-        service.spreadsheets().values().update(prefs.sheetId, range, valueRange)
-            .apply { valueInputOption = "RAW" }.execute()
+        checkForRecover(recoverFromError) {
+            service.spreadsheets().values().update(prefs.sheetId, range, valueRange)
+                .apply { valueInputOption = "RAW" }.execute()
+        }
     }
 
 }

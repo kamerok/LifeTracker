@@ -6,6 +6,7 @@ import com.facebook.flipper.android.utils.FlipperUtils
 import com.facebook.flipper.plugins.databases.DatabasesFlipperPlugin
 import com.facebook.soloader.SoLoader
 import com.jakewharton.threetenabp.AndroidThreeTen
+import java.lang.ref.WeakReference
 
 
 class App : Application() {
@@ -20,6 +21,8 @@ class App : Application() {
             client.addPlugin(DatabasesFlipperPlugin(this))
             client.start()
         }
+
+        DataProvider.context = WeakReference(this)
     }
 
 }
