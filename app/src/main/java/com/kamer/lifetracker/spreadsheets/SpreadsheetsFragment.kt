@@ -19,7 +19,7 @@ class SpreadsheetsFragment(
     private val adapter by lazy {
         SpreadsheetAdapter {
             DataProvider.prefs.sheetId = it
-            findNavController().popBackStack()
+            findNavController().navigate(R.id.action_spreadsheets_fragment_to_home_fragment)
         }
     }
 

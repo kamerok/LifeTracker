@@ -47,7 +47,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 val task: Task<GoogleSignInAccount> =
                     GoogleSignIn.getSignedInAccountFromIntent(data)
                 if (task.isSuccessful) {
-                    findNavController().popBackStack()
+                    findNavController().navigate(R.id.action_login_fragment_to_spreadsheets_fragment)
                 }
             }
         }

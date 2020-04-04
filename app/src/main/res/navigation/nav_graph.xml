@@ -2,15 +2,16 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/spreadsheets"
-    app:startDestination="@id/home_fragment">
+    app:startDestination="@id/login_fragment">
 
     <fragment
         android:id="@+id/login_fragment"
         android:name="com.kamer.lifetracker.login.LoginFragment"
-        android:label="LoginFragment" />
-    <action
-        android:id="@+id/login"
-        app:destination="@id/login_fragment" />
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_login_fragment_to_spreadsheets_fragment"
+            app:destination="@id/spreadsheets_fragment" />
+    </fragment>
     <fragment
         android:id="@+id/home_fragment"
         android:name="com.kamer.lifetracker.home.HomeFragment"
@@ -18,8 +19,11 @@
     <fragment
         android:id="@+id/spreadsheets_fragment"
         android:name="com.kamer.lifetracker.spreadsheets.SpreadsheetsFragment"
-        android:label="SpreadsheetsFragment" />
-    <action
-        android:id="@+id/spreadsheets"
-        app:destination="@id/spreadsheets_fragment" />
+        android:label="SpreadsheetsFragment" >
+        <action
+            android:id="@+id/action_spreadsheets_fragment_to_home_fragment"
+            app:destination="@id/home_fragment"
+            app:popUpTo="@id/login_fragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
