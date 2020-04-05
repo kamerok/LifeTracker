@@ -25,11 +25,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         supportFragmentManager.fragmentFactory = object : FragmentFactory() {
             override fun instantiate(classLoader: ClassLoader, className: String): Fragment =
                 when (className) {
-                    SpreadsheetsFragment::class.qualifiedName -> SpreadsheetsFragment(DataProvider.driveService)
+                    SpreadsheetsFragment::class.qualifiedName -> SpreadsheetsFragment(
+                        DataProvider.driveService
+                    ) {
+                        DataProvider.prefs.sheetId = it
+                        findNavController(R.id.fragment_container)
+                            .navigate(R.id.action_spreadsheets_fragment_to_home_fragment)
+                    }
                     LoginFragment::class.qualifiedName -> LoginFragment {
-                        findNavController(R.id.fragment_container).navigate(
-                            R.id.action_login_fragment_to_spreadsheets_fragment
-                        )
+                        findNavController(R.id.fragment_container)
+                            .navigate(R.id.action_login_fragment_to_spreadsheets_fragment)
                     }
                     else -> super.instantiate(classLoader, className)
                 }
