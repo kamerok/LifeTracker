@@ -59,9 +59,9 @@ dependencies {
     implementation Libs.sqlDelightAndroidDriver
     implementation Libs.threeTen
 
-    debugImplementation 'com.facebook.flipper:flipper:0.31.2'
-    debugImplementation 'com.facebook.soloader:soloader:0.8.2'
-    releaseImplementation 'com.facebook.flipper:flipper-noop:0.32.0'
+    debugImplementation Libs.flipper
+    debugImplementation Libs.soLoader
+    releaseImplementation Libs.flipperNoOp
 
     testImplementation Libs.sqlDelightSqliteDriver
     testImplementation Tests.assertK

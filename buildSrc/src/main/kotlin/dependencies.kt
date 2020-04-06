@@ -11,6 +11,7 @@ object Versions {
     val constraintLayout = "1.1.3"
     val core = "1.2.0"
     val coroutines = "1.3.3"
+    val flipper = "0.36.0"
     val fragment = "1.2.4"
     val googleAuth = "17.0.0"
     val googleClient = "1.30.8"
@@ -22,6 +23,7 @@ object Versions {
     val material = "1.1.0"
     val navigation = "2.3.0-alpha04"
     val recyclerView = "1.1.0"
+    val soLoader = "0.8.2"
     val sqlDelight = "1.2.2"
     val threeTen = "1.2.2"
 }
@@ -51,11 +53,14 @@ object Android {
 }
 
 object Libs {
+    val flipper = "com.facebook.flipper:flipper:${Versions.flipper}"
+    val flipperNoOp = "com.facebook.flipper:flipper-noop:${Versions.flipper}"
     val googleAuth = "com.google.android.gms:play-services-auth:${Versions.googleAuth}"
     val googleClient = "com.google.api-client:google-api-client-android:${Versions.googleClient}"
     val googleDrive = "com.google.apis:google-api-services-drive:${Versions.googleDrive}"
     val googleSheets = "com.google.apis:google-api-services-sheets:${Versions.googleSheets}"
     val material = "com.google.android.material:material:${Versions.material}"
+    val soLoader = "com.facebook.soloader:soloader:${Versions.soLoader}"
     val sqlDelightAndroidDriver = "com.squareup.sqldelight:android-driver:${Versions.sqlDelight}"
     val sqlDelightCoroutines =
         "com.squareup.sqldelight:coroutines-extensions-jvm:${Versions.sqlDelight}"
