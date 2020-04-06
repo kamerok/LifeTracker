@@ -17,6 +17,7 @@ object Versions {
     val googleDrive = "v3-rev110-1.23.0"
     val googleSheets = "v4-rev581-1.25.0"
     val gradleAndroid = "3.6.2"
+    val gradleVersions = "0.28.0"
     val kotlin = "1.3.71"
     val material = "1.1.0"
     val navigation = "2.3.0-alpha04"
@@ -27,6 +28,7 @@ object Versions {
 
 object Plugins {
     val gradleAndroid = "com.android.tools.build:gradle:${Versions.gradleAndroid}"
+    val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersions}"
     val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     val navigationSafeArgs =
         "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
