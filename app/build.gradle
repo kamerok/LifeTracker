@@ -4,17 +4,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
+apply from: rootProject.file('gradle/default-android-config.gradle')
+
 android {
-    compileSdkVersion 29
     defaultConfig {
         applicationId "com.kamer.lifetracker"
-        minSdkVersion 21
-        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
     }
-
-    viewBinding.enabled = true
 
     signingConfigs {
         config {
@@ -43,39 +40,35 @@ android {
 }
 
 dependencies {
-    def nav_version = "2.3.0-alpha04"
-
     implementation project(':database')
     implementation project(':library:calendar')
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.fragment:fragment-ktx:1.2.4'
-    implementation "androidx.recyclerview:recyclerview:1.1.0"
-    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.2'
-    implementation 'com.google.android.gms:play-services-auth:17.0.0'
-    implementation 'com.google.api-client:google-api-client-android:1.30.8'
-    implementation 'com.google.apis:google-api-services-sheets:v4-rev581-1.25.0'
-    implementation 'com.google.apis:google-api-services-drive:v3-rev110-1.23.0'
-    implementation 'com.squareup.sqldelight:android-driver:1.2.2'
-
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation Android.appCompat
+    implementation Android.constraintLayout
+    implementation Android.core
+    implementation Android.fragment
+    implementation Android.navigationFragment
+    implementation Android.navigationUi
+    implementation Android.recyclerView
+    implementation Kotlin.coroutines
+    implementation Kotlin.stdlib
+    implementation Libs.googleAuth
+    implementation Libs.googleClient
+    implementation Libs.googleDrive
+    implementation Libs.googleSheets
+    implementation Libs.material
+    implementation Libs.sqlDelightAndroidDriver
+    implementation Libs.threeTen
 
     debugImplementation 'com.facebook.flipper:flipper:0.31.2'
     debugImplementation 'com.facebook.soloader:soloader:0.8.2'
     releaseImplementation 'com.facebook.flipper:flipper-noop:0.32.0'
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3'
-    implementation 'com.google.android.material:material:1.1.0'
-
-    testImplementation 'junit:junit:4.13'
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
-    testImplementation 'com.willowtreeapps.assertk:assertk-jvm:0.22'
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.4'
-    testImplementation 'org.mockito:mockito-inline:2.13.0'
-    testImplementation 'com.squareup.sqldelight:sqlite-driver:1.2.2'
+    testImplementation Libs.sqlDelightSqliteDriver
+    testImplementation Tests.assertK
+    testImplementation Tests.coroutines
+    testImplementation Tests.junit
+    testImplementation Tests.mockitoInline
+    testImplementation Tests.mockitoKotlin
 
 }

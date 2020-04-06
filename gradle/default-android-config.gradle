@@ -1,0 +1,11 @@
+android {
+    compileSdkVersion Config.compileSdk
+    defaultConfig {
+        minSdkVersion Config.minSdk
+        targetSdkVersion Config.targetSdk
+    }
+
+    viewBinding.enabled = true
+}
+
+//add deps
