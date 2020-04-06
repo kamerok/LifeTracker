@@ -8,4 +8,6 @@ android {
     viewBinding.enabled = true
 }
 
-//add deps
+dependencies {
+    implementation Kotlin.stdlib
+}

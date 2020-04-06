@@ -51,7 +51,6 @@ dependencies {
     implementation Android.navigationUi
     implementation Android.recyclerView
     implementation Kotlin.coroutines
-    implementation Kotlin.stdlib
     implementation Libs.googleAuth
     implementation Libs.googleClient
     implementation Libs.googleDrive

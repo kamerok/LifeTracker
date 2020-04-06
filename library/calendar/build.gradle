@@ -8,6 +8,5 @@ dependencies {
     implementation Android.constraintLayout
     implementation Android.core
     implementation Android.recyclerView
-    implementation Kotlin.stdlib
     implementation Libs.threeTen
 }
