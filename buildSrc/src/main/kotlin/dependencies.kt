@@ -24,7 +24,7 @@ object Versions {
     val navigation = "2.3.0-alpha04"
     val recyclerView = "1.1.0"
     val soLoader = "0.8.2"
-    val sqlDelight = "1.2.2"
+    val sqlDelight = "1.3.0"
     val threeTen = "1.2.2"
 }
 
