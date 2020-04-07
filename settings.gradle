@@ -4,3 +4,5 @@ include ':app'
 include ':database'
 
 include ':library:calendar'
+
+include ':feature:login'

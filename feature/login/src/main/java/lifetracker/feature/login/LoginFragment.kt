@@ -1,4 +1,4 @@
-package com.kamer.lifetracker.login
+package lifetracker.feature.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,9 +10,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
-import com.kamer.lifetracker.R
-import com.kamer.lifetracker.databinding.FragmentLoginBinding
-import com.kamer.lifetracker.viewBinding
+import lifetracker.feature.login.databinding.FragmentLoginBinding
 
 
 class LoginFragment(
@@ -20,8 +18,6 @@ class LoginFragment(
 ) : Fragment(R.layout.fragment_login) {
 
     private lateinit var googleSignInClient: GoogleSignInClient
-
-    private val binding by viewBinding(FragmentLoginBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +34,13 @@ class LoginFragment(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.signInView.setOnClickListener {
-            startActivityForResult(googleSignInClient.signInIntent, SIGN_IN)
+        FragmentLoginBinding.bind(view).apply {
+            signInView.setOnClickListener {
+                startActivityForResult(
+                    googleSignInClient.signInIntent,
+                    SIGN_IN
+                )
+            }
         }
     }
 

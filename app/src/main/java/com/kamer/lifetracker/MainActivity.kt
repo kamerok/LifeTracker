@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentFactory
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.kamer.lifetracker.login.LoginFragment
 import com.kamer.lifetracker.spreadsheets.SpreadsheetsFragment
+import lifetracker.feature.login.LoginFragment
 
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {

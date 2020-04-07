@@ -41,11 +41,10 @@ android {
 
 dependencies {
     implementation project(':database')
+    implementation project(':feature:login')
     implementation project(':library:calendar')
 
-    implementation Android.appCompat
     implementation Android.constraintLayout
-    implementation Android.core
     implementation Android.fragment
     implementation Android.navigationFragment
     implementation Android.navigationUi

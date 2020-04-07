@@ -5,6 +5,5 @@ apply from: rootProject.file('gradle/default-android-config.gradle')
 
 dependencies {
     implementation Android.constraintLayout
-    implementation Android.recyclerView
-    implementation Libs.threeTen
+    implementation Libs.googleAuth
 }

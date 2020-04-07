@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/login_fragment"
-        android:name="com.kamer.lifetracker.login.LoginFragment"
+        android:name="lifetracker.feature.login.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_login_fragment_to_spreadsheets_fragment"
