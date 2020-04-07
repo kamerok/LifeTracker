@@ -2,7 +2,6 @@ package com.kamer.lifetracker
 
 import android.content.Context
 import android.content.Intent
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.json.JsonFactory
@@ -14,6 +13,7 @@ import kotlinx.coroutines.withContext
 
 class DriveService(
     private val context: Context,
+    private val authData: AuthData,
     private val httpTransport: HttpTransport,
     private val jsonFactory: JsonFactory,
     private val recoverFromError: suspend (Intent) -> Unit
@@ -21,7 +21,7 @@ class DriveService(
 
     suspend fun getSpreadsheets(): List<Spreadsheet> = withContext(Dispatchers.IO) {
         val credential = GoogleAccountCredential.usingOAuth2(context, listOf(DriveScopes.DRIVE))
-        credential.selectedAccount = GoogleSignIn.getLastSignedInAccount(context)!!.account
+        credential.selectedAccount = authData.account
 
         val service = Drive.Builder(httpTransport, jsonFactory, credential)
             .setApplicationName(context.getString(R.string.app_name))

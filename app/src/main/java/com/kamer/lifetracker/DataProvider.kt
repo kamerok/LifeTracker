@@ -31,8 +31,9 @@ object DataProvider {
             )
         )
     }
-    val prefs by lazy {
-        Prefs(
+    val authData by lazy {
+        AuthData(
+            context!!.get()!!,
             context!!.get()!!.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         )
     }
@@ -41,14 +42,14 @@ object DataProvider {
     private val httpTransport = NetHttpTransport.Builder().build()
     val activityResultDelegate = ActivityResultDelegate()
     val driveService by lazy {
-        DriveService(context!!.get()!!.applicationContext, httpTransport, jsonFactory) {
+        DriveService(context!!.get()!!.applicationContext, authData, httpTransport, jsonFactory) {
             activityResultDelegate.launchIntentAsync(it).await()
         }
     }
     private val spreadSheetService by lazy {
         SpreadsheetService(
             context!!.get()!!.applicationContext,
-            prefs,
+            authData,
             httpTransport,
             jsonFactory
         ) {

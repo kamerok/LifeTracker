@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.kamer.lifetracker.spreadsheets.SpreadsheetsFragment
 import lifetracker.feature.login.LoginFragment
 
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     SpreadsheetsFragment::class.qualifiedName -> SpreadsheetsFragment(
                         DataProvider.driveService
                     ) {
-                        DataProvider.prefs.sheetId = it
+                        DataProvider.authData.sheetId = it
                         findNavController(R.id.fragment_container)
                             .navigate(R.id.action_spreadsheets_fragment_to_home_fragment)
                     }
@@ -47,8 +46,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         if (!navController.isGraphSet()) {
             val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
-            val isLoggedAndSet = GoogleSignIn.getLastSignedInAccount(this) != null &&
-                    DataProvider.prefs.sheetId != null
+            val authData = DataProvider.authData
+            val isLoggedAndSet = authData.account != null && authData.sheetId != null
             val destination = if (isLoggedAndSet) R.id.home_fragment else R.id.login_fragment
 
             navGraph.startDestination = destination

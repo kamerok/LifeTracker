@@ -2,7 +2,6 @@ package com.kamer.lifetracker
 
 import android.content.Context
 import android.content.Intent
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.json.JsonFactory
@@ -15,7 +14,7 @@ import kotlinx.coroutines.withContext
 
 class SpreadsheetService(
     private val context: Context,
-    private val prefs: Prefs,
+    private val authData: AuthData,
     private val httpTransport: HttpTransport,
     private val jsonFactory: JsonFactory,
     private val recoverFromError: suspend (Intent) -> Unit
@@ -25,14 +24,14 @@ class SpreadsheetService(
 
     suspend fun getData(): List<List<Any>> = withContext(Dispatchers.IO) {
         val credential = GoogleAccountCredential.usingOAuth2(context, scopes)
-        credential.selectedAccount = GoogleSignIn.getLastSignedInAccount(context)!!.account
+        credential.selectedAccount = authData.account
 
         val service = Sheets.Builder(httpTransport, jsonFactory, credential)
             .setApplicationName(context.getString(R.string.app_name))
             .build()
 
         val data = checkForRecover(recoverFromError) {
-            service.spreadsheets().values().get(prefs.sheetId, "A1:Z").execute()
+            service.spreadsheets().values().get(authData.sheetId, "A1:Z").execute()
         }
         println(data)
         data.getValues()
@@ -40,7 +39,7 @@ class SpreadsheetService(
 
     suspend fun setCell(row: Long, column: Long, value: Any) = withContext(Dispatchers.IO) {
         val credential = GoogleAccountCredential.usingOAuth2(context, scopes)
-        credential.selectedAccount = GoogleSignIn.getLastSignedInAccount(context)!!.account
+        credential.selectedAccount = authData.account
 
         val service = Sheets.Builder(httpTransport, jsonFactory, credential)
             .setApplicationName(context.getString(R.string.app_name))
@@ -50,7 +49,7 @@ class SpreadsheetService(
         val valueRange = ValueRange().setValues(listOf(listOf(value)))
         println("$range $value")
         checkForRecover(recoverFromError) {
-            service.spreadsheets().values().update(prefs.sheetId, range, valueRange)
+            service.spreadsheets().values().update(authData.sheetId, range, valueRange)
                 .apply { valueInputOption = "RAW" }.execute()
         }
     }
