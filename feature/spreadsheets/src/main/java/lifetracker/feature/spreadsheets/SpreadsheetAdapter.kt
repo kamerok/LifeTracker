@@ -1,4 +1,4 @@
-package com.kamer.lifetracker.spreadsheets
+package lifetracker.feature.spreadsheets
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,9 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.kamer.lifetracker.R
-import com.kamer.lifetracker.Spreadsheet
-import com.kamer.lifetracker.databinding.ItemPropertyBinding
+import lifetracker.feature.spreadsheets.databinding.ItemSpreadsheetBinding
 
 
 class SpreadsheetAdapter(
@@ -37,7 +35,7 @@ class SpreadsheetAdapter(
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val binding = ItemPropertyBinding.bind(view)
+        private val binding = ItemSpreadsheetBinding.bind(view)
 
         fun bind(model: Spreadsheet) = with(binding) {
             itemView.setOnClickListener { listener(model.id) }

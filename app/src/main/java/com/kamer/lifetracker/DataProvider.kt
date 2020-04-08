@@ -2,7 +2,9 @@ package com.kamer.lifetracker
 
 import android.content.Context
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.google.api.client.http.HttpTransport
 import com.google.api.client.http.javanet.NetHttpTransport
+import com.google.api.client.json.JsonFactory
 import com.google.api.client.json.jackson2.JacksonFactory
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import lifetracker.common.auth.AuthData
@@ -39,14 +41,9 @@ object DataProvider {
         )
     }
 
-    private val jsonFactory = JacksonFactory.getDefaultInstance()
-    private val httpTransport = NetHttpTransport.Builder().build()
+    val jsonFactory: JsonFactory = JacksonFactory.getDefaultInstance()
+    val httpTransport: HttpTransport = NetHttpTransport.Builder().build()
     val activityResultDelegate = ActivityResultDelegate()
-    val driveService by lazy {
-        DriveService(context!!.get()!!.applicationContext, authData, httpTransport, jsonFactory) {
-            activityResultDelegate.launchIntentAsync(it).await()
-        }
-    }
     private val spreadSheetService by lazy {
         SpreadsheetService(
             context!!.get()!!.applicationContext,

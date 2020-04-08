@@ -18,7 +18,7 @@
         android:label="HomeFragment" />
     <fragment
         android:id="@+id/spreadsheets_fragment"
-        android:name="com.kamer.lifetracker.spreadsheets.SpreadsheetsFragment"
+        android:name="lifetracker.feature.spreadsheets.SpreadsheetsFragment"
         android:label="SpreadsheetsFragment" >
         <action
             android:id="@+id/action_spreadsheets_fragment_to_home_fragment"

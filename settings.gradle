@@ -8,3 +8,4 @@ include ':library:calendar'
 include ':common:auth'
 
 include ':feature:login'
+include ':feature:spreadsheets'

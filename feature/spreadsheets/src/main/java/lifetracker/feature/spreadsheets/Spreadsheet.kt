@@ -1,4 +1,4 @@
-package com.kamer.lifetracker
+package lifetracker.feature.spreadsheets
 
 
 data class Spreadsheet(

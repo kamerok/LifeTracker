@@ -43,6 +43,7 @@ dependencies {
     implementation project(':database')
     implementation project(':common:auth')
     implementation project(':feature:login')
+    implementation project(':feature:spreadsheets')
     implementation project(':library:calendar')
 
     implementation Android.constraintLayout
@@ -52,7 +53,6 @@ dependencies {
     implementation Android.recyclerView
     implementation Kotlin.coroutines
     implementation Libs.googleClient
-    implementation Libs.googleDrive
     implementation Libs.googleSheets
     implementation Libs.material
     implementation Libs.sqlDelightAndroidDriver

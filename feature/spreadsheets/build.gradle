@@ -1,0 +1,15 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+apply from: rootProject.file('gradle/default-android-config.gradle')
+
+dependencies {
+    implementation project(":common:auth")
+
+    implementation Android.constraintLayout
+    implementation Android.fragment
+    implementation Android.recyclerView
+    implementation Kotlin.coroutines
+    implementation Libs.googleClient
+    implementation Libs.googleDrive
+}
