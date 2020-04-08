@@ -1,4 +1,4 @@
-package com.kamer.lifetracker
+package lifetracker.common.auth
 
 import android.content.Intent
 import com.google.android.gms.auth.UserRecoverableAuthException

@@ -41,6 +41,7 @@ android {
 
 dependencies {
     implementation project(':database')
+    implementation project(':common:auth')
     implementation project(':feature:login')
     implementation project(':library:calendar')
 
@@ -50,7 +51,6 @@ dependencies {
     implementation Android.navigationUi
     implementation Android.recyclerView
     implementation Kotlin.coroutines
-    implementation Libs.googleAuth
     implementation Libs.googleClient
     implementation Libs.googleDrive
     implementation Libs.googleSheets

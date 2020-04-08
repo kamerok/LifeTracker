@@ -10,6 +10,8 @@ import com.google.api.services.sheets.v4.SheetsScopes
 import com.google.api.services.sheets.v4.model.ValueRange
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import lifetracker.common.auth.AuthData
+import lifetracker.common.auth.checkForRecover
 
 
 class SpreadsheetService(

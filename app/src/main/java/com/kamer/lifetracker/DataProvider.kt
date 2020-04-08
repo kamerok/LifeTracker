@@ -5,6 +5,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.google.api.client.http.javanet.NetHttpTransport
 import com.google.api.client.json.jackson2.JacksonFactory
 import com.squareup.sqldelight.android.AndroidSqliteDriver
+import lifetracker.common.auth.AuthData
 import lifetracker.database.Data
 import lifetracker.database.Database
 import lifetracker.database.DatabaseFactory

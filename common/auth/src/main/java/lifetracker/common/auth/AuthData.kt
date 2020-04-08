@@ -1,4 +1,4 @@
-package com.kamer.lifetracker
+package lifetracker.common.auth
 
 import android.accounts.Account
 import android.content.Context

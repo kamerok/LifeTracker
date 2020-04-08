@@ -9,6 +9,8 @@ import com.google.api.services.drive.Drive
 import com.google.api.services.drive.DriveScopes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import lifetracker.common.auth.AuthData
+import lifetracker.common.auth.checkForRecover
 
 
 class DriveService(
