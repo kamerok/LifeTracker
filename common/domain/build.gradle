@@ -1,0 +1,21 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+apply from: rootProject.file('gradle/default-android-config.gradle')
+
+dependencies {
+    implementation project(":common:auth")
+    implementation project(":common:database")
+
+    implementation Kotlin.coroutines
+    implementation Libs.googleClient
+    implementation Libs.googleSheets
+    implementation Libs.threeTen
+
+    testImplementation Libs.sqlDelightSqliteDriver
+    testImplementation Tests.assertK
+    testImplementation Tests.coroutines
+    testImplementation Tests.junit
+    testImplementation Tests.mockitoInline
+    testImplementation Tests.mockitoKotlin
+}

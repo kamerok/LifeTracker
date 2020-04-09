@@ -1,4 +1,4 @@
-package com.kamer.lifetracker
+package lifetracker.common.domain
 
 import android.content.Context
 import android.content.Intent
@@ -16,6 +16,7 @@ import lifetracker.common.auth.checkForRecover
 
 class SpreadsheetService(
     private val context: Context,
+    private val appName: String,
     private val authData: AuthData,
     private val httpTransport: HttpTransport,
     private val jsonFactory: JsonFactory,
@@ -29,7 +30,7 @@ class SpreadsheetService(
         credential.selectedAccount = authData.account
 
         val service = Sheets.Builder(httpTransport, jsonFactory, credential)
-            .setApplicationName(context.getString(R.string.app_name))
+            .setApplicationName(appName)
             .build()
 
         val data = checkForRecover(recoverFromError) {
@@ -44,7 +45,7 @@ class SpreadsheetService(
         credential.selectedAccount = authData.account
 
         val service = Sheets.Builder(httpTransport, jsonFactory, credential)
-            .setApplicationName(context.getString(R.string.app_name))
+            .setApplicationName(appName)
             .build()
 
         val range = ('A'.toInt() + column).toChar().toString() + row
@@ -54,6 +55,7 @@ class SpreadsheetService(
             service.spreadsheets().values().update(authData.sheetId, range, valueRange)
                 .apply { valueInputOption = "RAW" }.execute()
         }
+        Unit
     }
 
 }

@@ -11,6 +11,9 @@ import lifetracker.common.auth.AuthData
 import lifetracker.common.database.Data
 import lifetracker.common.database.Database
 import lifetracker.common.database.DatabaseFactory
+import lifetracker.common.domain.SpreadsheetService
+import lifetracker.common.domain.Synchronizer
+import lifetracker.common.domain.UpdateDataUseCase
 import lifetracker.library.activityresult.ActivityResultDelegate
 import java.lang.ref.WeakReference
 
@@ -49,6 +52,7 @@ object DataProvider {
     private val spreadSheetService by lazy {
         SpreadsheetService(
             context!!.get()!!.applicationContext,
+            context!!.get()!!.getString(R.string.app_name),
             authData,
             httpTransport,
             jsonFactory

@@ -1,4 +1,4 @@
-package com.kamer.lifetracker
+package lifetracker.common.domain
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

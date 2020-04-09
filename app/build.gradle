@@ -42,6 +42,7 @@ android {
 dependencies {
     implementation project(':common:auth')
     implementation project(':common:database')
+    implementation project(':common:domain')
     implementation project(':feature:home')
     implementation project(':feature:login')
     implementation project(':feature:spreadsheets')
@@ -55,7 +56,6 @@ dependencies {
     implementation Android.recyclerView
     implementation Kotlin.coroutines
     implementation Libs.googleClient
-    implementation Libs.googleSheets
     implementation Libs.material
     implementation Libs.sqlDelightAndroidDriver
     implementation Libs.threeTen
@@ -63,12 +63,5 @@ dependencies {
     debugImplementation Libs.flipper
     debugImplementation Libs.soLoader
     releaseImplementation Libs.flipperNoOp
-
-    testImplementation Libs.sqlDelightSqliteDriver
-    testImplementation Tests.assertK
-    testImplementation Tests.coroutines
-    testImplementation Tests.junit
-    testImplementation Tests.mockitoInline
-    testImplementation Tests.mockitoKotlin
 
 }

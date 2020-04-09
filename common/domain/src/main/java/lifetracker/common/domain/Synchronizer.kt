@@ -1,4 +1,4 @@
-package com.kamer.lifetracker
+package lifetracker.common.domain
 
 
 class Synchronizer(

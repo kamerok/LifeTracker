@@ -1,4 +1,4 @@
-package com.kamer.lifetracker
+package lifetracker.common.domain
 
 import assertk.assertThat
 import assertk.assertions.hasSize
