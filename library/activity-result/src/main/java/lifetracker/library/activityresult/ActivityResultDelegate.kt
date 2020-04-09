@@ -1,4 +1,4 @@
-package com.kamer.lifetracker
+package lifetracker.library.activityresult
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -32,7 +32,12 @@ class ActivityResultDelegate {
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
         return resultByCode[requestCode]?.let {
-            it.complete(ActivityResult(resultCode, data))
+            it.complete(
+                ActivityResult(
+                    resultCode,
+                    data
+                )
+            )
             resultByCode.remove(requestCode)
             true
         } ?: false

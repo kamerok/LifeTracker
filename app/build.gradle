@@ -44,6 +44,7 @@ dependencies {
     implementation project(':common:auth')
     implementation project(':feature:login')
     implementation project(':feature:spreadsheets')
+    implementation project(':library:activity-result')
     implementation project(':library:calendar')
 
     implementation Android.constraintLayout

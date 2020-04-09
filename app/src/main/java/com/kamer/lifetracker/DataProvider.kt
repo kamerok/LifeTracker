@@ -11,6 +11,7 @@ import lifetracker.common.auth.AuthData
 import lifetracker.database.Data
 import lifetracker.database.Database
 import lifetracker.database.DatabaseFactory
+import lifetracker.library.activityresult.ActivityResultDelegate
 import java.lang.ref.WeakReference
 
 
@@ -43,7 +44,8 @@ object DataProvider {
 
     val jsonFactory: JsonFactory = JacksonFactory.getDefaultInstance()
     val httpTransport: HttpTransport = NetHttpTransport.Builder().build()
-    val activityResultDelegate = ActivityResultDelegate()
+    val activityResultDelegate =
+        ActivityResultDelegate()
     private val spreadSheetService by lazy {
         SpreadsheetService(
             context!!.get()!!.applicationContext,

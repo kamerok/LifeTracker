@@ -1,4 +1,4 @@
-package com.kamer.lifetracker
+package lifetracker.library.activityresult
 
 import android.content.Intent
 
