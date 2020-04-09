@@ -11,9 +11,9 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver.Companion.IN_MEMORY
 import kotlinx.coroutines.runBlocking
-import lifetracker.database.Data
-import lifetracker.database.Database
-import lifetracker.database.DatabaseFactory
+import lifetracker.common.database.Data
+import lifetracker.common.database.Database
+import lifetracker.common.database.DatabaseFactory
 import org.junit.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Month

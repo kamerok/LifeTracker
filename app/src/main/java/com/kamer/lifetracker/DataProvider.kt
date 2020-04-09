@@ -8,9 +8,9 @@ import com.google.api.client.json.JsonFactory
 import com.google.api.client.json.jackson2.JacksonFactory
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import lifetracker.common.auth.AuthData
-import lifetracker.database.Data
-import lifetracker.database.Database
-import lifetracker.database.DatabaseFactory
+import lifetracker.common.database.Data
+import lifetracker.common.database.Database
+import lifetracker.common.database.DatabaseFactory
 import lifetracker.library.activityresult.ActivityResultDelegate
 import java.lang.ref.WeakReference
 

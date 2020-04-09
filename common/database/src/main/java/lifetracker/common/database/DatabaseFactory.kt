@@ -1,4 +1,4 @@
-package lifetracker.database
+package lifetracker.common.database
 
 import com.squareup.sqldelight.ColumnAdapter
 import com.squareup.sqldelight.db.SqlDriver

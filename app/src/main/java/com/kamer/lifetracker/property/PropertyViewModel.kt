@@ -5,7 +5,7 @@ import com.kamer.lifetracker.DataProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
-import lifetracker.database.Data
+import lifetracker.common.database.Data
 
 
 class PropertyViewModel(

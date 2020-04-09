@@ -1,12 +1,13 @@
 rootProject.name='LifeTracker'
 
 include ':app'
-include ':database'
 
 include ':library:activity-result'
 include ':library:calendar'
 
 include ':common:auth'
+include ':common:database'
 
+include ':feature:home'
 include ':feature:login'
 include ':feature:spreadsheets'

@@ -1,4 +1,4 @@
-package lifetracker.database
+package lifetracker.common.database
 
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList

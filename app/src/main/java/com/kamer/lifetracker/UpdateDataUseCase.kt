@@ -2,10 +2,10 @@ package com.kamer.lifetracker
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import lifetracker.database.Data
-import lifetracker.database.Entry
-import lifetracker.database.EntryProperty
-import lifetracker.database.Property
+import lifetracker.common.database.Data
+import lifetracker.common.database.Entry
+import lifetracker.common.database.EntryProperty
+import lifetracker.common.database.Property
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import java.util.*

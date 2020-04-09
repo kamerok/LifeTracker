@@ -40,8 +40,9 @@ android {
 }
 
 dependencies {
-    implementation project(':database')
     implementation project(':common:auth')
+    implementation project(':common:database')
+    implementation project(':feature:home')
     implementation project(':feature:login')
     implementation project(':feature:spreadsheets')
     implementation project(':library:activity-result')
