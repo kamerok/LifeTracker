@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentFactory
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -13,6 +14,8 @@ import com.kamer.lifetracker.R
 import com.kamer.lifetracker.databinding.FragmentHomeBinding
 import com.kamer.lifetracker.viewBinding
 import kotlinx.coroutines.launch
+import lifetracker.feature.home.records.RecordsFragment
+import lifetracker.feature.home.records.RecordsFragmentDirections
 
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -27,6 +30,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 requireActivity().onBackPressed()
                 isEnabled = true
             }
+        }
+        childFragmentManager.fragmentFactory = object : FragmentFactory() {
+            override fun instantiate(classLoader: ClassLoader, className: String): Fragment =
+                when (className) {
+                    RecordsFragment::class.qualifiedName -> RecordsFragment(DataProvider.database) {
+                        binding.fragmentContainer.findNavController()
+                            .navigate(RecordsFragmentDirections.record(it))
+                    }
+                    else -> super.instantiate(classLoader, className)
+                }
         }
     }
 

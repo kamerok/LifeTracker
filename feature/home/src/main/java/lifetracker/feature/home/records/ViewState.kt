@@ -1,4 +1,4 @@
-package com.kamer.lifetracker.records
+package lifetracker.feature.home.records
 
 import org.threeten.bp.LocalDate
 

@@ -4,5 +4,14 @@ apply plugin: 'kotlin-android'
 apply from: rootProject.file('gradle/default-android-config.gradle')
 
 dependencies {
+    implementation project(":common:domain")
+    implementation project(":common:database")
+    implementation project(":library:calendar")
+
     implementation Android.constraintLayout
+    implementation Android.fragment
+    implementation Android.navigationFragment
+    implementation Android.navigationUi
+    implementation Kotlin.coroutines
+    implementation Libs.threeTen
 }
