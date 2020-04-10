@@ -14,8 +14,8 @@ import com.kamer.lifetracker.R
 import com.kamer.lifetracker.databinding.FragmentHomeBinding
 import com.kamer.lifetracker.viewBinding
 import kotlinx.coroutines.launch
-import lifetracker.feature.home.records.RecordsFragment
-import lifetracker.feature.home.records.RecordsFragmentDirections
+import lifetracker.feature.records.RecordsFragment
+import lifetracker.feature.records.RecordsFragmentDirections
 
 
 class HomeFragment : Fragment(R.layout.fragment_home) {

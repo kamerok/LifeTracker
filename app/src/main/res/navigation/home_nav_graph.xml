@@ -13,7 +13,7 @@
     </fragment>
     <fragment
         android:id="@+id/records_fragment"
-        android:name="lifetracker.feature.home.records.RecordsFragment"
+        android:name="lifetracker.feature.records.RecordsFragment"
         android:label="RecordsFragment" >
         <action
             android:id="@+id/record"

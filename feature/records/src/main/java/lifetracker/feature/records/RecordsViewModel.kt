@@ -1,4 +1,4 @@
-package lifetracker.feature.home.records
+package lifetracker.feature.records
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.Flow

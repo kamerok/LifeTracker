@@ -9,6 +9,6 @@ include ':common:auth'
 include ':common:database'
 include ':common:domain'
 
-include ':feature:home'
 include ':feature:login'
+include ':feature:records'
 include ':feature:spreadsheets'
