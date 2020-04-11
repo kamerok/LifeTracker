@@ -1,9 +1,7 @@
-apply from: rootProject.file('gradle/apply-credential-properties.gradle')
-
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: "androidx.navigation.safeargs.kotlin"
 
+apply from: rootProject.file('gradle/apply-credential-properties.gradle')
 apply from: rootProject.file('gradle/default-android-config.gradle')
 
 android {
@@ -49,12 +47,10 @@ dependencies {
     implementation project(':library:activity-result')
 
     implementation Android.constraintLayout
-    implementation Android.fragment
     implementation Android.navigationFragment
     implementation Android.navigationUi
     implementation Kotlin.coroutines
     implementation Libs.googleClient
-    implementation Libs.material
     implementation Libs.sqlDelightAndroidDriver
     implementation Libs.threeTen
 
