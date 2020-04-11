@@ -9,8 +9,7 @@ dependencies {
 
     implementation Android.constraintLayout
     implementation Android.fragment
-    implementation Android.navigationFragment
-    implementation Android.navigationUi
+    implementation Android.recyclerView
     implementation Kotlin.coroutines
     implementation Libs.threeTen
 }
