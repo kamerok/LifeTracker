@@ -1,41 +1,39 @@
-package lifetracker.feature.records
+package lifetracker.feature.properties
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import lifetracker.common.database.Data
-import lifetracker.feature.records.databinding.FragmentRecordsBinding
-import org.threeten.bp.LocalDate
+import lifetracker.feature.properties.databinding.FragmentPropertiesBinding
 
 
-class RecordsFragment(
+class PropertiesFragment(
     private val data: Data,
-    private val onDateSelected: (LocalDate) -> Unit
-) : Fragment(R.layout.fragment_records) {
+    private val onPropertySelected: (String) -> Unit
+) : Fragment(R.layout.fragment_properties) {
 
-    private val viewModel: RecordsViewModel by viewModels {
+    private val viewModel: PropertiesViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-                RecordsViewModel(data) as T
+                PropertiesViewModel(data) as T
         }
     }
 
+    private val adapter by lazy { PropertyAdapter(onPropertySelected) }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        with(FragmentRecordsBinding.bind(view)) {
+        with(FragmentPropertiesBinding.bind(view)) {
+            recyclerView.adapter = adapter
             requireActivity().setTitle(requireContext().applicationInfo.labelRes)
-            calendarView.onDateClickListener(onDateSelected)
 
             viewModel.getState()
-                .onEach { calendarView.setData(it.filledDates) }
-                .catch { Log.e("TAG", "onViewCreated: ", it) }
+                .onEach { adapter.setData(it.properties) }
                 .launchIn(viewLifecycleOwner.lifecycle.coroutineScope)
         }
     }

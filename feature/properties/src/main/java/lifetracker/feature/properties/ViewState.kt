@@ -1,4 +1,4 @@
-package com.kamer.lifetracker.properties
+package lifetracker.feature.properties
 
 
 data class ViewState(

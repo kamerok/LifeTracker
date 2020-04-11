@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/properties_fragment"
-        android:name="com.kamer.lifetracker.properties.PropertiesFragment"
+        android:name="lifetracker.feature.properties.PropertiesFragment"
         android:label="PropertiesFragment" >
         <action
             android:id="@+id/property"
