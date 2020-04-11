@@ -29,14 +29,11 @@
     </fragment>
     <fragment
         android:id="@+id/property_fragment"
-        android:name="com.kamer.lifetracker.property.PropertyFragment"
+        android:name="lifetracker.feature.property.PropertyFragment"
         android:label="PropertyFragment" >
         <action
             android:id="@+id/record"
             app:destination="@id/record_fragment" />
-        <argument
-            android:name="id"
-            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/record_fragment"

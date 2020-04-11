@@ -8,6 +8,7 @@ import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import com.kamer.lifetracker.R
 import com.kamer.lifetracker.databinding.FragmentPropertiesBinding
+import lifetracker.feature.property.PropertyFragment
 import com.kamer.lifetracker.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -19,7 +20,7 @@ class PropertiesFragment : Fragment(R.layout.fragment_properties) {
 
     private val binding by viewBinding(FragmentPropertiesBinding::bind)
     private val adapter = PropertyAdapter { id ->
-        findNavController().navigate(PropertiesFragmentDirections.property(id))
+        findNavController().navigate(R.id.property, PropertyFragment.createArgs(id))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

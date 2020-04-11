@@ -1,7 +1,6 @@
-package com.kamer.lifetracker.property
+package lifetracker.feature.property
 
 import androidx.lifecycle.ViewModel
-import com.kamer.lifetracker.DataProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
@@ -10,7 +9,7 @@ import lifetracker.common.database.Data
 
 class PropertyViewModel(
     private val id: String,
-    private val database: Data = DataProvider.database
+    private val database: Data
 ) : ViewModel() {
 
     fun getState(): Flow<ViewState> =
