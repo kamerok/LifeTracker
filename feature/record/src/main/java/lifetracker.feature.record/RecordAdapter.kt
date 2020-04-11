@@ -1,12 +1,11 @@
-package com.kamer.lifetracker.record
+package lifetracker.feature.record
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.kamer.lifetracker.R
-import com.kamer.lifetracker.databinding.ItemRecordFieldBinding
+import lifetracker.feature.record.databinding.ItemRecordFieldBinding
 
 
 class RecordAdapter(

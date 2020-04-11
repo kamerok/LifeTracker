@@ -11,6 +11,7 @@ import com.kamer.lifetracker.databinding.FragmentFeedBinding
 import com.kamer.lifetracker.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import lifetracker.feature.record.RecordFragment
 
 
 class FeedFragment : Fragment(R.layout.fragment_feed) {
@@ -19,7 +20,7 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
 
     private val binding by viewBinding(FragmentFeedBinding::bind)
     private val adapter = FeedAdapter { date ->
-        findNavController().navigate(FeedFragmentDirections.record(date))
+        findNavController().navigate(R.id.record, RecordFragment.createArgs(date))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

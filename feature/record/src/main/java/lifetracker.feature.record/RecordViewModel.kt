@@ -1,22 +1,27 @@
-package com.kamer.lifetracker.record
+package lifetracker.feature.record
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kamer.lifetracker.DataProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import lifetracker.common.database.Data
+import lifetracker.common.domain.SetPropertyUseCase
 import org.threeten.bp.LocalDate
 
 
-class RecordViewModel(private val date: LocalDate) : ViewModel() {
+class RecordViewModel(
+    private val date: LocalDate,
+    private val data: Data,
+    private val setPropertyUseCase: SetPropertyUseCase
+) : ViewModel() {
 
     fun getState(): Flow<ViewState> =
-        DataProvider.database.observeEntryByDate(date)
+        data.observeEntryByDate(date)
             .flatMapLatest { entry ->
-                DataProvider.database.getEntryProperties(entry.id)
+                data.getEntryProperties(entry.id)
                     .map { data ->
                         val fields = data.map { value ->
                             RecordField(
@@ -32,20 +37,19 @@ class RecordViewModel(private val date: LocalDate) : ViewModel() {
     fun onStateClick(id: String, isPositive: Boolean) {
         viewModelScope.launch {
             try {
-                val entryId = DataProvider.database.getEntryByDate(date).id
-                val entryProperty =
-                    DataProvider.database.getEntryProperty(entryId, id)
+                val entryId = data.getEntryByDate(date).id
+                val entryProperty = data.getEntryProperty(entryId, id)
                 val oldValue = entryProperty?.value
                 val newValue = when {
                     oldValue == true && isPositive -> null
                     oldValue == false && !isPositive -> null
                     else -> isPositive
                 }
-                DataProvider.updateData(entryId, id, newValue)
+                setPropertyUseCase.set(entryId, id, newValue)
                 if (entryProperty != null) {
-                    DataProvider.database.updateEntryPropertyValue(entryId, id, newValue)
+                    data.updateEntryPropertyValue(entryId, id, newValue)
                 } else {
-                    DataProvider.database.createEntryProperty(entryId, id, newValue)
+                    data.createEntryProperty(entryId, id, newValue)
                 }
             } catch (e: Exception) {
                 Log.e("TAG", "onStateClick: ", e)

@@ -14,6 +14,7 @@ import com.kamer.lifetracker.databinding.FragmentPropertyBinding
 import com.kamer.lifetracker.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import lifetracker.feature.record.RecordFragment
 
 
 class PropertyFragment : Fragment(R.layout.fragment_property) {
@@ -30,7 +31,7 @@ class PropertyFragment : Fragment(R.layout.fragment_property) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.calendarView.onDateClickListener { date ->
-            findNavController().navigate(PropertyFragmentDirections.record(date))
+            findNavController().navigate(R.id.record, RecordFragment.createArgs(date))
         }
 
         viewModel.getState()

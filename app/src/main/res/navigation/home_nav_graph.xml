@@ -40,10 +40,6 @@
     </fragment>
     <fragment
         android:id="@+id/record_fragment"
-        android:name="com.kamer.lifetracker.record.RecordFragment"
-        android:label="RecordFragment" >
-        <argument
-            android:name="date"
-            app:argType="org.threeten.bp.LocalDate" />
-    </fragment>
+        android:name="lifetracker.feature.record.RecordFragment"
+        android:label="RecordFragment" />
 </navigation>

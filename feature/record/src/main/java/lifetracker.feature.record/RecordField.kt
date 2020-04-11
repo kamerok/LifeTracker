@@ -1,4 +1,4 @@
-package com.kamer.lifetracker.record
+package lifetracker.feature.record
 
 
 data class RecordField(

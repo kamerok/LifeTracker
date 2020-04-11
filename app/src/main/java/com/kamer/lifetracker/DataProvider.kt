@@ -49,7 +49,7 @@ object DataProvider {
     val httpTransport: HttpTransport = NetHttpTransport.Builder().build()
     val activityResultDelegate =
         ActivityResultDelegate()
-    private val spreadSheetService by lazy {
+    val spreadSheetService by lazy {
         SpreadsheetService(
             context!!.get()!!.applicationContext,
             context!!.get()!!.getString(R.string.app_name),
@@ -67,11 +67,4 @@ object DataProvider {
 
     suspend fun updateData() = synchronizer.sync()
 
-    suspend fun updateData(entryId: String, propertyId: String, value: Boolean?) {
-        val rowNumber =
-            database.getEntry(entryId).position + 1 /*first row*/ + 1 /*indexes start from zero but table not*/
-        val columnNumber = database.getProperty(propertyId).position + 1
-        val cellValue = (value?.let { if (it) "Y" else "N" }) ?: ""
-        spreadSheetService.setCell(rowNumber, columnNumber, cellValue)
-    }
 }

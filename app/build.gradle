@@ -44,6 +44,7 @@ dependencies {
     implementation project(':common:database')
     implementation project(':common:domain')
     implementation project(':feature:login')
+    implementation project(':feature:record')
     implementation project(':feature:records')
     implementation project(':feature:spreadsheets')
     implementation project(':library:activity-result')
