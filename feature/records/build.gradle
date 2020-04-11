@@ -3,9 +3,6 @@ apply plugin: 'kotlin-android'
 
 apply from: rootProject.file('gradle/default-android-config.gradle')
 
-//due to weird bug after changing package viewBinding stopped working
-android.viewBinding.enabled = false
-
 dependencies {
     implementation project(":common:database")
     implementation project(":library:calendar")
