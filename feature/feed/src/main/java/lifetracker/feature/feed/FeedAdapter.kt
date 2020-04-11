@@ -1,13 +1,12 @@
-package com.kamer.lifetracker.feed
+package lifetracker.feature.feed
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.kamer.lifetracker.R
-import com.kamer.lifetracker.databinding.ItemDayDoneBinding
-import com.kamer.lifetracker.databinding.ItemDayProgressBinding
-import com.kamer.lifetracker.databinding.ItemSkippedDayBinding
+import lifetracker.feature.feed.databinding.ItemDayDoneBinding
+import lifetracker.feature.feed.databinding.ItemDayProgressBinding
+import lifetracker.feature.feed.databinding.ItemSkippedDayBinding
 import org.threeten.bp.LocalDate
 
 

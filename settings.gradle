@@ -9,6 +9,7 @@ include ':common:auth'
 include ':common:database'
 include ':common:domain'
 
+include ':feature:feed'
 include ':feature:login'
 include ':feature:properties'
 include ':feature:property'

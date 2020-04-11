@@ -1,4 +1,4 @@
-package com.kamer.lifetracker.feed
+package lifetracker.feature.feed
 
 
 data class ViewState(

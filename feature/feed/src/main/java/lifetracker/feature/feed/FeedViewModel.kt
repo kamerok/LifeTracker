@@ -1,15 +1,15 @@
-package com.kamer.lifetracker.feed
+package lifetracker.feature.feed
 
 import androidx.lifecycle.ViewModel
-import com.kamer.lifetracker.DataProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import lifetracker.common.database.Data
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 
 
-class FeedViewModel : ViewModel() {
+class FeedViewModel(private val data: Data) : ViewModel() {
 
     fun getState(): Flow<ViewState> {
         val currentEntryDate = if (LocalTime.now().isBefore(LocalTime.of(6, 0))) {
@@ -17,7 +17,7 @@ class FeedViewModel : ViewModel() {
         } else {
             LocalDate.now()
         }
-        val previousProgress = DataProvider.database.getEntryStatus(currentEntryDate.minusDays(1))
+        val previousProgress = data.getEntryStatus(currentEntryDate.minusDays(1))
             .map { (entry, total) ->
                 if (entry.count < total) {
                     SkippedDay(entry.date)
@@ -25,7 +25,7 @@ class FeedViewModel : ViewModel() {
                     null
                 }
             }
-        val currentProgress = DataProvider.database.getEntryStatus(currentEntryDate)
+        val currentProgress = data.getEntryStatus(currentEntryDate)
             .map { (entry, total) ->
                 if (entry.count == total) {
                     TodayProgress.Done(entry.date)

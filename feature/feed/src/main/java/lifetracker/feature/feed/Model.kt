@@ -1,4 +1,4 @@
-package com.kamer.lifetracker.feed
+package lifetracker.feature.feed
 
 import org.threeten.bp.LocalDate
 

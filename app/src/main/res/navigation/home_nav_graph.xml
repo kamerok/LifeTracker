@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/feed_fragment"
-        android:name="com.kamer.lifetracker.feed.FeedFragment"
+        android:name="lifetracker.feature.feed.FeedFragment"
         android:label="FeedFragment" >
         <action
             android:id="@+id/record"

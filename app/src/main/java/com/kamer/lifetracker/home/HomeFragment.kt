@@ -15,6 +15,7 @@ import com.kamer.lifetracker.databinding.FragmentHomeBinding
 import lifetracker.feature.property.PropertyFragment
 import com.kamer.lifetracker.viewBinding
 import kotlinx.coroutines.launch
+import lifetracker.feature.feed.FeedFragment
 import lifetracker.feature.properties.PropertiesFragment
 import lifetracker.feature.record.RecordFragment
 import lifetracker.feature.records.RecordsFragment
@@ -36,6 +37,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         childFragmentManager.fragmentFactory = object : FragmentFactory() {
             override fun instantiate(classLoader: ClassLoader, className: String): Fragment =
                 when (className) {
+                    FeedFragment::class.qualifiedName -> FeedFragment(DataProvider.database) {
+                        binding.fragmentContainer.findNavController()
+                            .navigate(R.id.record, RecordFragment.createArgs(it))
+                    }
                     PropertiesFragment::class.qualifiedName -> PropertiesFragment(DataProvider.database) {
                         binding.fragmentContainer.findNavController()
                             .navigate(R.id.property, PropertyFragment.createArgs(it))
