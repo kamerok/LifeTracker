@@ -61,10 +61,8 @@ object DataProvider {
         }
     }
 
-    private val synchronizer by lazy {
+    val synchronizer by lazy {
         Synchronizer(UpdateDataUseCase(database), spreadSheetService)
     }
-
-    suspend fun updateData() = synchronizer.sync()
 
 }

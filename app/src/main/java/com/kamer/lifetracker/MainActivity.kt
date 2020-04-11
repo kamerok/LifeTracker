@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import lifetracker.feature.home.HomeFragment
 import lifetracker.feature.login.LoginFragment
 import lifetracker.feature.spreadsheets.SpreadsheetsFragment
 
@@ -39,6 +40,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         findNavController(R.id.fragment_container)
                             .navigate(R.id.action_login_fragment_to_spreadsheets_fragment)
                     }
+                    HomeFragment::class.qualifiedName -> HomeFragment(
+                        DataProvider.database,
+                        DataProvider.spreadSheetService,
+                        DataProvider.synchronizer
+                    )
                     else -> super.instantiate(classLoader, className)
                 }
         }

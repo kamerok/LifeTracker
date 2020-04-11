@@ -1,0 +1,20 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+apply from: rootProject.file('gradle/default-android-config.gradle')
+
+dependencies {
+    implementation project(":common:database")
+    implementation project(":common:domain")
+    implementation project(':feature:feed')
+    implementation project(':feature:properties')
+    implementation project(':feature:property')
+    implementation project(':feature:record')
+    implementation project(':feature:records')
+
+    implementation Android.constraintLayout
+    implementation Android.fragment
+    implementation Android.navigationFragment
+    implementation Android.navigationUi
+    implementation Libs.threeTen
+}

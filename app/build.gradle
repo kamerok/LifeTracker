@@ -43,12 +43,8 @@ dependencies {
     implementation project(':common:auth')
     implementation project(':common:database')
     implementation project(':common:domain')
-    implementation project(':feature:feed')
+    implementation project(':feature:home')
     implementation project(':feature:login')
-    implementation project(':feature:properties')
-    implementation project(':feature:property')
-    implementation project(':feature:record')
-    implementation project(':feature:records')
     implementation project(':feature:spreadsheets')
     implementation project(':library:activity-result')
 

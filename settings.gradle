@@ -10,6 +10,7 @@ include ':common:database'
 include ':common:domain'
 
 include ':feature:feed'
+include ':feature:home'
 include ':feature:login'
 include ':feature:properties'
 include ':feature:property'
