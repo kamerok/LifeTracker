@@ -2,6 +2,7 @@ package lifetracker.feature.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -50,7 +51,11 @@ class LoginFragment(
             SIGN_IN -> {
                 val task: Task<GoogleSignInAccount> =
                     GoogleSignIn.getSignedInAccountFromIntent(data)
-                if (task.isSuccessful) onLoginSuccess()
+                if (task.isSuccessful) {
+                    onLoginSuccess()
+                } else {
+                    Log.d(this::class.qualifiedName, "Login Error", task.exception)
+                }
             }
         }
     }
