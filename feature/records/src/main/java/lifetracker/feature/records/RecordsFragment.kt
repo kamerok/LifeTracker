@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import lifetracker.common.database.Data
-import lifetracker.library.calendar.CalendarView
+import lifetracker.feature.records.databinding.FragmentRecordsBinding
 import org.threeten.bp.LocalDate
 
 
@@ -29,14 +29,15 @@ class RecordsFragment(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val calendarView = view.findViewById<CalendarView>(R.id.calendar_view)
-        requireActivity().setTitle(requireContext().applicationContext.applicationInfo.labelRes)
-        calendarView.onDateClickListener(onDateSelected)
+        with(FragmentRecordsBinding.bind(view)) {
+            requireActivity().setTitle(requireContext().applicationContext.applicationInfo.labelRes)
+            calendarView.onDateClickListener(onDateSelected)
 
-        viewModel.getState()
-            .onEach { calendarView.setData(it.filledDates) }
-            .catch { Log.e("TAG", "onViewCreated: ", it) }
-            .launchIn(viewLifecycleOwner.lifecycle.coroutineScope)
+            viewModel.getState()
+                .onEach { calendarView.setData(it.filledDates) }
+                .catch { Log.e("TAG", "onViewCreated: ", it) }
+                .launchIn(viewLifecycleOwner.lifecycle.coroutineScope)
+        }
     }
 
 }
