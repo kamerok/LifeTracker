@@ -29,32 +29,40 @@ class CalendarView @JvmOverloads constructor(
     }
 
     fun setData(data: Map<LocalDate, Boolean>) {
-        var start = LocalDate.now().with(firstDayOfYear())
-        val end = LocalDate.now().with(TemporalAdjusters.lastDayOfYear())
+        val minDate = data.keys.min() ?: LocalDate.now()
+        val maxDate = LocalDate.now()
+        var start = minDate.withDayOfMonth(1)
+        val end = maxDate.withDayOfMonth(maxDate.month.length(maxDate.isLeapYear))
         val totalDates: MutableList<LocalDate> = mutableListOf()
         while (!start.isAfter(end)) {
             totalDates.add(start)
             start = start.plusDays(1)
         }
-        val months = totalDates.groupBy { it.month }
-            .mapValues { (_, days) ->
-                val startDate = days.first()
-                (1 until startDate.dayOfWeek.value).map { UiDay.DummyDay }
-                    .plus(days.map {
-                        UiDay.RealDay(
-                            it,
-                            it == LocalDate.now(),
-                            data[it] == true
+        val years = totalDates
+            .groupBy { it.year }
+            .toSortedMap(compareByDescending { it })
+            .mapValues { (_, daysInYear) ->
+                daysInYear.groupBy { it.month }
+                    .toSortedMap(compareByDescending { it })
+                    .mapValues { (_, days) ->
+                        val startDate = days.first()
+                        (1 until startDate.dayOfWeek.value).map { UiDay.DummyDay }
+                            .plus(days.map {
+                                UiDay.RealDay(
+                                    it,
+                                    it == LocalDate.now(),
+                                    data[it] == true
+                                )
+                            })
+                    }
+                    .map { (month, days) ->
+                        UiMonth(
+                            name = month.name,
+                            days = days
                         )
-                    })
+                    }
             }
-            .map { (month, days) ->
-                UiMonth(
-                    name = month.name,
-                    days = days
-                )
-            }
-        adapter.setData(months)
+        adapter.setData(years.values.flatten())
     }
 
 }
