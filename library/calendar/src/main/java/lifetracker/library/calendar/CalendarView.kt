@@ -21,7 +21,9 @@ class CalendarView @JvmOverloads constructor(
 
     init {
         setAdapter(adapter)
-        layoutManager = LinearLayoutManager(context)
+        layoutManager = LinearLayoutManager(context).apply {
+            stackFromEnd = true
+        }
     }
 
     fun onDateClickListener(listener: (LocalDate) -> Unit) {
@@ -40,10 +42,10 @@ class CalendarView @JvmOverloads constructor(
         }
         val years = totalDates
             .groupBy { it.year }
-            .toSortedMap(compareByDescending { it })
+            .toSortedMap()
             .mapValues { (_, daysInYear) ->
                 daysInYear.groupBy { it.month }
-                    .toSortedMap(compareByDescending { it })
+                    .toSortedMap()
                     .mapValues { (_, days) ->
                         val startDate = days.first()
                         (1 until startDate.dayOfWeek.value).map { UiDay.DummyDay }
