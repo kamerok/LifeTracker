@@ -31,7 +31,7 @@ class CalendarView @JvmOverloads constructor(
     }
 
     fun setData(data: Map<LocalDate, Boolean>) {
-        val minDate = data.keys.min() ?: LocalDate.now()
+        val minDate = (data.keys.min() ?: LocalDate.now()).withDayOfYear(1)
         val maxDate = LocalDate.now()
         var start = minDate.withDayOfMonth(1)
         val end = maxDate.withDayOfMonth(maxDate.month.length(maxDate.isLeapYear))
