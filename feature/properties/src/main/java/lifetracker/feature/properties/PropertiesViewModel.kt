@@ -9,7 +9,11 @@ import lifetracker.common.database.Data
 class PropertiesViewModel(private val data: Data) : ViewModel() {
 
     fun getState(): Flow<ViewState> = data.getProperties().map { list ->
-        ViewState(list.map { UiProperty(it.id, it.name) })
+        ViewState(
+            list
+                .sortedBy { it.isArchived }
+                .map { UiProperty(it.id, it.name, it.isArchived) }
+        )
     }
 
 }

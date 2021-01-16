@@ -44,6 +44,7 @@ class PropertyAdapter(
         fun bind(model: UiProperty) = with(binding) {
             itemView.setOnClickListener { listener(model.id) }
             textView.text = model.name
+            textView.isEnabled = !model.isArchived
         }
     }
 

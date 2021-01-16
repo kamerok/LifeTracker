@@ -7,5 +7,6 @@ data class ViewState(
 
 data class UiProperty(
     val id: String,
-    val name: String
+    val name: String,
+    val isArchived: Boolean
 )
