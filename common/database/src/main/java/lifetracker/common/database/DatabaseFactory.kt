@@ -2,6 +2,7 @@ package lifetracker.common.database
 
 import com.squareup.sqldelight.ColumnAdapter
 import com.squareup.sqldelight.db.SqlDriver
+import lifetrackercommondatabase.Entry
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 

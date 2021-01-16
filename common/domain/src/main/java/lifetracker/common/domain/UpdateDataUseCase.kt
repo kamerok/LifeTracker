@@ -3,9 +3,9 @@ package lifetracker.common.domain
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import lifetracker.common.database.Data
-import lifetracker.common.database.Entry
-import lifetracker.common.database.EntryProperty
-import lifetracker.common.database.Property
+import lifetrackercommondatabase.Entry
+import lifetrackercommondatabase.EntryProperty
+import lifetrackercommondatabase.Property
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import java.util.*
@@ -28,7 +28,7 @@ class UpdateDataUseCase(
         val entryProperties = values.drop(1).withIndex().flatMap { row ->
             val entryValues = row.value.drop(1)
             entryValues.mapIndexed { index, value ->
-                EntryProperty.Impl(
+                EntryProperty(
                     entryId = entries[row.index].id,
                     propertyId = properties[index].id,
                     value = when (value) {
@@ -50,11 +50,13 @@ class UpdateDataUseCase(
         val existingProperties = database.getAllProperties()
         return propertyNames.mapIndexed { index, value ->
             val name = value.toString()
+            val isArchived = name.startsWith(ARCHIVED_MARKER)
             val existingProperty = existingProperties.find { it.name == name }
-            Property.Impl(
+            Property(
                 id = existingProperty?.id ?: UUID.randomUUID().toString(),
-                name = name,
-                position = index.toLong()
+                name = name.substringAfter(ARCHIVED_MARKER),
+                position = index.toLong(),
+                isArchived = isArchived
             )
         }
     }
@@ -63,12 +65,16 @@ class UpdateDataUseCase(
         val existingEntries = database.getAllEntries()
         return entryDates.mapIndexed { index, entryDate ->
             val existingEntry = existingEntries.find { it.date == entryDate }
-            Entry.Impl(
+            Entry(
                 id = existingEntry?.id ?: UUID.randomUUID().toString(),
                 date = entryDate,
                 position = index.toLong()
             )
         }
+    }
+
+    companion object {
+        private const val ARCHIVED_MARKER = "[Archived]"
     }
 
 }

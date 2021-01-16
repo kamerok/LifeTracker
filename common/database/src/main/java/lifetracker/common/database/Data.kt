@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import lifetrackercommondatabase.*
 import org.threeten.bp.LocalDate
 
 
@@ -86,7 +87,7 @@ class Data(private val database: Database) {
 
     suspend fun createEntryProperty(entryId: String, propertyId: String, value: Boolean?) =
         withContext(Dispatchers.IO) {
-            database.entryPropertyQueries.insert(EntryProperty.Impl(entryId, propertyId, value))
+            database.entryPropertyQueries.insert(EntryProperty(entryId, propertyId, value))
         }
 
     suspend fun getProperty(id: String): Property = withContext(Dispatchers.IO) {

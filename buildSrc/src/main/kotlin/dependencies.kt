@@ -17,14 +17,14 @@ object Versions {
     val googleClient = "1.30.8"
     val googleDrive = "v3-rev110-1.23.0"
     val googleSheets = "v4-rev581-1.25.0"
-    val gradleAndroid = "3.6.2"
+    val gradleAndroid = "4.1.0"
     val gradleVersions = "0.28.0"
-    val kotlin = "1.3.71"
+    val kotlin = "1.4.21"
     val material = "1.1.0"
     val navigation = "2.3.0-alpha04"
     val recyclerView = "1.1.0"
     val soLoader = "0.8.2"
-    val sqlDelight = "1.3.0"
+    val sqlDelight = "1.4.4"
     val threeTen = "1.2.2"
 }
 
