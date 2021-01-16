@@ -35,8 +35,9 @@ class Data(private val database: Database) {
     fun getEntries(): Flow<Map<EntryPreview, Boolean>> =
         database.entryQueries.entryPreview().asFlow().mapToList()
             .flatMapLatest { entries ->
+                //room for errors because archived features may be filled
                 val size = database.propertyQueries.size().executeAsOne()
-                flowOf(entries.map { it to (it.count == size) }.toMap())
+                flowOf(entries.map { it to (it.count >= size) }.toMap())
             }
 
     fun getEntryStatus(date: LocalDate): Flow<Pair<EntryPreviewByDate, Long>> =
