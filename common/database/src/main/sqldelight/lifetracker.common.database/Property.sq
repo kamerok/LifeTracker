@@ -21,7 +21,8 @@ WHERE id = :id;
 
 size:
 SELECT count()
-FROM property;
+FROM property
+WHERE isArchived != 1;
 
 selectAll:
 SELECT *

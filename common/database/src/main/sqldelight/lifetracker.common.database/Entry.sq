@@ -34,8 +34,9 @@ GROUP BY id
 ORDER BY date;
 
 entryPreviewByDate:
-SELECT id, date, count(value)
+SELECT entry.id, date, count(value)
 FROM entry
 LEFT JOIN entryProperty ON entryId = entry.id
-WHERE date = :date
-GROUP BY id;
+JOIN property ON entryProperty.propertyId = property.id
+WHERE date = :date AND property.isArchived != 1
+GROUP BY entry.id;
