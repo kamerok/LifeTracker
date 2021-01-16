@@ -20,7 +20,10 @@ class PropertyViewModel(
                     .toMap()
                     .filter { it.value == true }
                     .mapValues { it.value!! }
-                ViewState(property.name, filledDates)
+                val name = property.name.let {
+                    if (property.isArchived) "$it (Archived)" else it
+                }
+                ViewState(name, filledDates)
             }
 
 }
